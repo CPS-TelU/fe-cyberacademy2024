@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <main className="pt-4">
       {/* <HomeLayout /> */}
-      {/* <MyCourse /> */}
-      <DashboardLayout />
+      <MyCourse />
+      {/* <DashboardLayout /> */}
     </main>
   );
 }
