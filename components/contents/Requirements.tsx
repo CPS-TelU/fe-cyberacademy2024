@@ -3,15 +3,16 @@
 import { useState } from 'react';
 
 const Requirements = () => {
-    const [isOpen1, setIsOpen1] = useState(true);
+    const [isOpen1, setIsOpen1] = useState(false);
     const [isOpen2, setIsOpen2] = useState(false);
     const [isOpen3, setIsOpen3] = useState(false);
     const [isOpen4, setIsOpen4] = useState(false);
+    const [isOpen5, setIsOpen5] = useState(false);
 
     return (
-        <section className="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
+        <section className="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 max-w-5xl mx-auto">
             <div>
-                <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-center mb-6 gradient-text">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center gradient-text">
                     Requirements
                 </h1>
 
@@ -19,7 +20,7 @@ const Requirements = () => {
                 <div className="border-b border-gray-300">
                     <button
                         type="button"
-                        className={`flex justify-between items-center w-full py-3 sm:py-4 text-lg sm:text-xl font-medium text-left ${
+                        className={`flex justify-between items-center w-full py-4 text-lg sm:text-xl font-medium text-left transition-colors duration-300 ${
                             isOpen1 ? 'text-red-600' : 'text-gray-900'
                         }`}
                         onClick={() => setIsOpen1(!isOpen1)}
@@ -35,7 +36,7 @@ const Requirements = () => {
                         }`}
                     >
                         <div className="py-3 text-sm sm:text-base md:text-lg text-gray-600">
-                            Creative Curriculum Vitae (CV) reflecting your educational background, experience, and skills.
+                            ATS Curriculum Vitae (CV) reflecting your educational background, experience, and skills.
                         </div>
                     </div>
                 </div>
@@ -44,7 +45,7 @@ const Requirements = () => {
                 <div className="border-b border-gray-300">
                     <button
                         type="button"
-                        className={`flex justify-between items-center w-full py-3 sm:py-4 text-lg sm:text-xl font-medium text-left ${
+                        className={`flex justify-between items-center w-full py-4 text-lg sm:text-xl font-medium text-left transition-colors duration-300 ${
                             isOpen2 ? 'text-[#BA2025]' : 'text-gray-900'
                         }`}
                         onClick={() => setIsOpen2(!isOpen2)}
@@ -69,12 +70,12 @@ const Requirements = () => {
                 <div className="border-b border-gray-300">
                     <button
                         type="button"
-                        className={`flex justify-between items-center w-full py-3 sm:py-4 text-lg sm:text-xl font-medium text-left ${
+                        className={`flex justify-between items-center w-full py-4 text-lg sm:text-xl font-medium text-left transition-colors duration-300 ${
                             isOpen3 ? 'text-red-600' : 'text-gray-900'
                         }`}
                         onClick={() => setIsOpen3(!isOpen3)}
                     >
-                        <span>Self Description</span>
+                        <span>KSM</span>
                         <span className={`${isOpen3 ? 'text-red-600' : 'text-gray-900'}`}>
                             {isOpen3 ? '−' : '+'}
                         </span>
@@ -85,7 +86,7 @@ const Requirements = () => {
                         }`}
                     >
                         <div className="py-3 text-sm sm:text-base md:text-lg text-gray-600">
-                            A brief self description including your hobbies, personality, and any relevant information.
+                        The latest semester transcript should include detailed course grades and formal proof of the student's academic performance.
                         </div>
                     </div>
                 </div>
@@ -94,12 +95,12 @@ const Requirements = () => {
                 <div className="border-b border-gray-300">
                     <button
                         type="button"
-                        className={`flex justify-between items-center w-full py-3 sm:py-4 text-lg sm:text-xl font-medium text-left ${
+                        className={`flex justify-between items-center w-full py-4 text-lg sm:text-xl font-medium text-left transition-colors duration-300 ${
                             isOpen4 ? 'text-red-600' : 'text-gray-900'
                         }`}
                         onClick={() => setIsOpen4(!isOpen4)}
                     >
-                        <span>Vision, Mission, and Motivation</span>
+                        <span>Motivation Letter</span>
                         <span className={`${isOpen4 ? 'text-red-600' : 'text-gray-900'}`}>
                             {isOpen4 ? '−' : '+'}
                         </span>
@@ -110,7 +111,32 @@ const Requirements = () => {
                         }`}
                     >
                         <div className="py-3 text-sm sm:text-base md:text-lg text-gray-600">
-                            Your vision, mission, and motivation for applying to this position.
+                            Your motivation for applying to Cyber Academy.
+                        </div>
+                    </div>
+                </div>
+
+                {/* Accordion 5 */}
+                <div className="border-b border-gray-300">
+                    <button
+                        type="button"
+                        className={`flex justify-between items-center w-full py-4 text-lg sm:text-xl font-medium text-left transition-colors duration-300 ${
+                            isOpen5 ? 'text-red-600' : 'text-gray-900'
+                        }`}
+                        onClick={() => setIsOpen5(!isOpen5)}
+                    >
+                        <span>Student of Telkom University</span>
+                        <span className={`${isOpen5 ? 'text-red-600' : 'text-gray-900'}`}>
+                            {isOpen5 ? '−' : '+'}
+                        </span>
+                    </button>
+                    <div
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                            isOpen5 ? 'max-h-40' : 'max-h-0'
+                        }`}
+                    >
+                        <div className="py-3 text-sm sm:text-base md:text-lg text-gray-600">
+                            Only for 2022, 2023, 2024.
                         </div>
                     </div>
                 </div>

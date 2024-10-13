@@ -1,37 +1,35 @@
-import Link from 'next/link';
-import React from 'react';
-import { FaArrowRight } from "react-icons/fa"
-import { dmSans } from '../../styles/font';
-import Videoplayer from "../ui/VideoPlayer";
-import  ArrowButton   from '../ui/AniButton';
+import Link from "next/link";
+import React from "react";
+import ArrowButton from "../ui/AniButton";
+import Image from "next/image";
 
 const HomeHero = () => {
+  return (
+    <section className="flex flex-col justify-center items-center  py-10 md:py-20">
+      {/* Content */}
+      <div className="text-center items-center">
+        <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold items-center text-center mb-4 mx-auto w-[90%] sm:w-[600px] md:w-[800px] lg:w-[900px] 2xl:w-[1000px]">
+          Welcome To <span className="gradient-text">Cyber Academy</span>
+        </h1>
+        <p className="mt-4 text-base sm:text-lg md:text-xl lg:text-2xl text-center">
+          Brace Yourself For A Whole New Adventure
+        </p>
+        <ArrowButton text="Let's Get Started" href="/" className="mt-8" />
+      </div>
 
-    return (
-        <section className={`flex justify-center font-bold min-h-screen py-20 ${dmSans.className}`} >
-            <div className="text-center items-center">
-                <h1 className="text-5xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl 2xl:text-6xl font-extrabold mb-4">
-                    HELLO <span className="gradient-text">CYTIZEN</span> !!
-                </h1>
-                <h1 className="text-5xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl 2xl:text-6xl font-extrabold mb-4 mx-auto w-[390px] sm:w-[600px] md:w-[800px] lg:w-[800px] xl:w-[900px] 2xl:w-[1000px]">
-                    WELCOME TO <span className="gradient-text">CYBER ACADEMY</span>
-                </h1>
-                <p className="mt-4 text-lg sm:text-2xl md:text-3xl lg:text-2xl xl:text-2xl 2xl:text-3xl font-bold ">
-                    BRACE YOURSELF FOR A WHOLE NEW ADVENTURE
-                </p>
-                {/* <Link 
-                href="/"
-                className="inline-flex items-center justify-center text-[4vw] sm:text-[4vw] md:text-[3vw] lg:text-[1.3vw] xl:text-[1vw]  bg-[#BA2025] text-white py-2 px-6 rounded-2xl mt-8 inline-block hover:bg-red-800 transition-colors duration-300"
-            >Let's Get Started <FaArrowRight className="ml-2"/>
-            </Link> */}
-            <ArrowButton text="Lets Get Started" href="/" className='mt-8'/> 
-
-            <div className="mt-10">
-                <Videoplayer/>
-            </div>
-            </div>
-        </section>
-    );
-}
+      {/* Image Section */}
+      <div className="mt-12 w-full flex justify-center px-4 md:px-0">
+        <Image
+          src="/oplab.jpg" // Replace with your image path
+          alt="Hero Image"
+          width={1200}
+          height={800}
+          objectFit="cover"
+          className="rounded-2xl w-full max-w-[90%] md:max-w-[80%] lg:max-w-[70%] xl:max-w-[90%] h-auto"
+        />
+      </div>
+    </section>
+  );
+};
 
 export default HomeHero;

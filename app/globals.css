@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 240 7% 96.5%; 
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -32,23 +32,17 @@
   }
 }
 
-
-body {
-  @apply bg-background text-foreground;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, #BA2025, #133042);
+  background: linear-gradient(90deg, #BA2025, #17364A);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
