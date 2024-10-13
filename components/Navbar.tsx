@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -8,7 +8,9 @@ import { dmSans } from "../styles/font";
 const Header = () => {
   const pathname = usePathname();
   const [isScrollingUp, setIsScrollingUp] = useState(true);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const lastScrollY = useRef(0);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleNavigationClick = (
     href: string,
@@ -19,6 +21,35 @@ const Header = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
+
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
+  const closeDropdown = () => {
+    setDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        closeDropdown();
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isDropdownOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,6 +77,7 @@ const Header = () => {
             <Image src="/logocps.png" alt="logo" width={130} height={50} />
           </Link>
         </div>
+
         <div className="flex-1 flex justify-center gap-10">
           <Link
             href="/dashboard"
@@ -82,10 +114,33 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="flex items-center">
-          <div className="cursor-pointer">
+        <div className="relative flex items-center" ref={dropdownRef}>
+          <div className="cursor-pointer flex items-center" onClick={toggleDropdown}>
             <Image src="/profile-icon.png" alt="Profile" width={40} height={40} />
+            <Image
+              src="/down-arrow.png"
+              alt="Dropdown Arrow"
+              width={24}
+              height={24}
+              className="ml-2"
+            />
           </div>
+          {isDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg z-10">
+              <Link
+                href="/profile"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >
+                Profile
+              </Link>
+              <Link
+                href="/logout"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >
+                Logout
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
     </header>
