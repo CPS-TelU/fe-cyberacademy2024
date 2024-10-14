@@ -73,11 +73,12 @@ export default function Home() {
           </div>
           <div>
             <label className="block text-sm font-medium">Year of Enrollment</label>
-            <input
-              type="text"
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="Select an option"
-            />
+            <select className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+              <option>Select an option</option>
+              <option>2022</option>
+              <option>2023</option>
+              <option>2024</option>
+            </select>
           </div>
         </div>
         <div className="mb-4">
