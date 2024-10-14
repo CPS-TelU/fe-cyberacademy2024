@@ -9,7 +9,7 @@ export default function Home() {
           The first step to start your journey
         </p>
       </div>
-      <form className="bg-white px-6 md:px-16 py-8 rounded-lg shadow-lg w-full max-w-lg md:max-w-4xl mb-8 border border-gray-300">
+      <form className="bg-white px-6 md:px-16 py-8 rounded-lg shadow-2xl w-full max-w-lg md:max-w-4xl mb-8 border border-gray-300">
         <div className="mb-4">
           <label className="block text-sm font-medium">Name</label>
           <input
