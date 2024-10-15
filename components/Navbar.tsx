@@ -84,8 +84,8 @@ const Header = () => {
             onClick={(e) => handleNavigationClick("/dashboard", e)}
             className={`font-medium ${
               pathname === "/dashboard"
-                ? "text-red-600"
-                : "text-gray-700 hover:text-red-600"
+                ? "text-[#BA2025]"
+                : "text-gray-700 hover:text-[#BA2025]"
             }`}
           >
             Dashboard
@@ -95,8 +95,8 @@ const Header = () => {
             onClick={(e) => handleNavigationClick("/my-courses", e)}
             className={`font-medium ${
               pathname === "/my-courses"
-                ? "text-red-600"
-                : "text-gray-700 hover:text-red-600"
+                ? "text-[#BA2025]"
+                : "text-gray-700 hover:text-[#BA2025]"
             }`}
           >
             My Courses
@@ -106,8 +106,8 @@ const Header = () => {
             onClick={(e) => handleNavigationClick("/discussion", e)}
             className={`font-medium ${
               pathname === "/discussion"
-                ? "text-red-600"
-                : "text-gray-700 hover:text-red-600"
+                ? "text-[#BA2025]"
+                : "text-gray-700 hover:text-[#BA2025]"
             }`}
           >
             Discussion
