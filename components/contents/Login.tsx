@@ -3,7 +3,7 @@ import React from 'react';
 const LoginPage = () => {
   return (
     <div className="relative min-h-screen w-full bg-[#ffffff] flex items-center justify-center p-4">
-      <button className="absolute top-12 left-4 sm:left-72 flex items-center justify-center w-10 h-10 bg-red-600 text-white rounded-full z-10 transform hover:scale-105 hover:bg-red-700 transition-colors duration-300 ease-in-out">
+      <button className="absolute top-6 left-4 sm:left-72 flex items-center justify-center w-10 h-10 bg-red-600 text-white rounded-full z-10 transform hover:scale-105 hover:bg-red-700 transition-colors duration-300 ease-in-out">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 transition-transform duration-300 ease-in-out hover:scale-110">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
