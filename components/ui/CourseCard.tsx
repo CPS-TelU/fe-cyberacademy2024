@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import { Button } from "./button";
+import Link from "next/link";
 
 interface CourseCardProps {
   image: string;
@@ -35,9 +37,9 @@ const CourseCard: React.FC<CourseCardProps> = ({
           <p className="text-[#454545] text-xs sm:text-xs md:text-xs lg:text-sm xl:text-md 2xl:text-lg">
             {status}
           </p>
-          <button className="px-3 py-1 bg-[#BA2025] text-[#FFFFFF] rounded-lg text-xs sm:text-sm md:text-base">
-            View Course
-          </button>
+          <Button className="px-3 py-1 bg-[#BA2025] text-[#FFFFFF] rounded-2xl text-xs sm:text-sm md:text-base hover:bg-[#E01319]">
+            <Link href={"/lms/mycourses/coursedetail"}>View Course</Link>
+          </Button>
         </div>
       </div>
     </div>

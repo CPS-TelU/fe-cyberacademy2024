@@ -14,7 +14,7 @@ const HomeHero = () => {
         <p className="mt-4 text-base sm:text-lg md:text-xl lg:text-2xl text-center">
           Brace Yourself For A Whole New Adventure
         </p>
-        <ArrowButton text="Let's Get Started" href="/" className="mt-8" />
+        <ArrowButton text="Let's Get Started" href="/lms/dashboard" className="mt-8" />
       </div>
 
       {/* Image Section */}

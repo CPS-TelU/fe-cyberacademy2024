@@ -90,8 +90,8 @@ const Header = () => {
 
         <div className="flex items-center">
           <a
-            href="#register"
-            onClick={(e) => handleNavigationClick("register", e)}
+            href="/registration"
+            onClick={(e) => handleNavigationClick("registration", e)}
             className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700"
           >
             Register Now

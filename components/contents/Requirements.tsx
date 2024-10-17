@@ -15,8 +15,6 @@ const Requirements = () => {
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center gradient-text">
                     Requirements
                 </h1>
-
-                {/* Accordion 1 */}
                 <div className="border-b border-gray-300">
                     <button
                         type="button"
@@ -40,8 +38,6 @@ const Requirements = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Accordion 2 */}
                 <div className="border-b border-gray-300">
                     <button
                         type="button"

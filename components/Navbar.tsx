@@ -51,17 +51,6 @@ const Header = () => {
     };
   }, [isDropdownOpen]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setIsScrollingUp(currentScrollY < lastScrollY.current || currentScrollY < 10);
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <header
       className={`${dmSans.className} fixed top-0 w-full transition-transform duration-300 z-[9999] ${
@@ -80,34 +69,34 @@ const Header = () => {
 
         <div className="flex-1 flex justify-center gap-10">
           <Link
-            href="/dashboard"
-            onClick={(e) => handleNavigationClick("/dashboard", e)}
+            href="/lms/dashboard"
+            onClick={(e) => handleNavigationClick("/lms/dashboard", e)}
             className={`font-medium ${
-              pathname === "/dashboard"
-                ? "text-[#BA2025]"
-                : "text-gray-700 hover:text-[#BA2025]"
+              pathname === "/lms/dashboard"
+                ? "text-red-600"
+                : "text-gray-700 hover:text-red-600"
             }`}
           >
             Dashboard
           </Link>
           <Link
-            href="/my-courses"
-            onClick={(e) => handleNavigationClick("/my-courses", e)}
+            href="/lms/mycourses"
+            onClick={(e) => handleNavigationClick("/lms/mycourses", e)}
             className={`font-medium ${
-              pathname === "/my-courses"
-                ? "text-[#BA2025]"
-                : "text-gray-700 hover:text-[#BA2025]"
+              pathname === "/lms/mycourses"
+                ? "text-red-600"
+                : "text-gray-700 hover:text-red-600"
             }`}
           >
             My Courses
           </Link>
           <Link
-            href="/discussion"
-            onClick={(e) => handleNavigationClick("/discussion", e)}
+            href="/lms/discussion"
+            onClick={(e) => handleNavigationClick("/lms/discussion", e)}
             className={`font-medium ${
-              pathname === "/discussion"
-                ? "text-[#BA2025]"
-                : "text-gray-700 hover:text-[#BA2025]"
+              pathname === "/lms/discussion"
+                ? "text-red-600"
+                : "text-gray-700 hover:text-red-600"
             }`}
           >
             Discussion
@@ -126,16 +115,16 @@ const Header = () => {
             />
           </div>
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg z-10">
+            <div className="absolute right-0 mt-40 w-48 bg-white border border-gray-200 shadow-lg rounded-2xl z-10">
               <Link
                 href="/profile"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                className="block px-4 py-2 text-gray-700 hover:text-white hover:bg-red-600 hover:rounded-t-2xl"
               >
                 Profile
               </Link>
               <Link
                 href="/logout"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                className="block px-4 py-2 text-gray-700 hover:text-white hover:bg-red-600 hover:rounded-b-2xl"
               >
                 Logout
               </Link>
