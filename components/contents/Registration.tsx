@@ -2,9 +2,10 @@
 
 import { poppins } from "@/styles/font";
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 
 const RegistrationPage = () => {
-  const [selectedFaculty, setSelectedFaculty] = useState("Select you faculty");
+  const [selectedFaculty, setSelectedFaculty] = useState("Select your faculty");
   const [selectedYear, setSelectedYear] = useState("Select an option");
   const [selectedGender, setSelectedGender] = useState("Select an option");
   const [showFacultyDropdown, setShowFacultyDropdown] = useState(false);
@@ -44,7 +45,15 @@ const RegistrationPage = () => {
   }, []);
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center p-4 ${poppins.className}`}>
+    <div className={`min-h-screen flex flex-col items-center justify-center ${poppins.className}`}>
+      <div className="w-full max-w-lg flex md:max-w-4xl">
+        <Link
+          href="/"
+          className="bg-[#BA2025] text-white p-3 rounded-full hover:bg-red-700"
+        >
+          <img src="/arrow-back-white.png" alt="Back" className="w-4 h-4" />
+        </Link>
+      </div>
       <div className="text-center mb-5">
         <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#BA2025] to-[#133042] text-transparent bg-clip-text px-4 md:px-8">
           REGISTRATION FORM
