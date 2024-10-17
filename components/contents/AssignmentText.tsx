@@ -1,5 +1,6 @@
 import React from 'react';
 import AddAssignmentCard from '../ui/AddAssignmentCard';
+import Image from 'next/image';
 
 const AssignmentText: React.FC = () => {
   return (
@@ -8,8 +9,8 @@ const AssignmentText: React.FC = () => {
         <h1 className="text-3xl font-semibold text-red-600 flex items-center justify-start mb-4 mt-28">
             <span className="mr-4 sm:mr-0 ml-4 sm:ml-0"> {/* Geser icon ke kanan pada mobile */}
                 {/* PNG Icon for Assignment */}
-                <img 
-                    src="Assignment1.png" // Update this path to your PNG file
+                <Image 
+                    src="/Assignment1.png" // Update this path to your PNG file
                     alt="Assignment Icon" 
                     width={32} 
                     height={32} 
@@ -25,8 +26,8 @@ const AssignmentText: React.FC = () => {
             details={
                 <div>
                     <div className="flex items-center mb-1"> {/* Margin bottom for spacing */}
-                        <img 
-                            src="Assignment1pdf.png" // Update this path to your PNG file
+                        <Image
+                            src="/Assignment1pdf.png" // Update this path to your PNG file
                             alt="File Icon" 
                             width={24} 
                             height={24} 

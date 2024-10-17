@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import "../globals.css";
 
+import Footer from "@/components/Footer";
+import NavbarLms from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Registration",
+  title: "LMS Cyber Academy",
 };
-export default async function RegisterationLayout({
+export default async function LmsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -13,8 +15,10 @@ export default async function RegisterationLayout({
   return (
     <html lang="en">
       <body>
+        <NavbarLms  />
         {children}
-        </body>
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -4,8 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { dmSans } from "../styles/font";
+import MobileNavDash from "./MobileNavDash";
 
-const Header = () => {
+const NavbarLms = () => {
   const pathname = usePathname();
   const [isScrollingUp, setIsScrollingUp] = useState(true);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -69,10 +70,10 @@ const Header = () => {
 
         <div className="flex-1 flex justify-center gap-10">
           <Link
-            href="/lms/dashboard"
-            onClick={(e) => handleNavigationClick("/lms/dashboard", e)}
+            href="/lms"
+            onClick={(e) => handleNavigationClick("/lms", e)}
             className={`font-medium ${
-              pathname === "/lms/dashboard"
+              pathname === "/lms"
                 ? "text-red-600"
                 : "text-gray-700 hover:text-red-600"
             }`}
@@ -117,13 +118,13 @@ const Header = () => {
           {isDropdownOpen && (
             <div className="absolute right-0 mt-40 w-48 bg-white border border-gray-200 shadow-lg rounded-2xl z-10">
               <Link
-                href="/profile"
-                className="block px-4 py-2 text-gray-700 hover:text-white hover:bg-red-600 hover:rounded-t-2xl"
+                href="/lms/profile"
+                className="block px-4 py-2 text-gray-700 hover:text-white hover:bg-red-600 hover:rounded-t-2xl "
               >
                 Profile
               </Link>
               <Link
-                href="/logout"
+                href="/"
                 className="block px-4 py-2 text-gray-700 hover:text-white hover:bg-red-600 hover:rounded-b-2xl"
               >
                 Logout
@@ -132,8 +133,9 @@ const Header = () => {
           )}
         </div>
       </nav>
+      <MobileNavDash/>
     </header>
   );
 };
 
-export default Header;
+export default NavbarLms;

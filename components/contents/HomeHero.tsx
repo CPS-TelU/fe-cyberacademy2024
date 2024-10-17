@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import ArrowButton from "../ui/AniButton";
+import { ArrowButton } from "../ui/AniButton";
 import Image from "next/image";
 
 const HomeHero = () => {
@@ -14,10 +14,8 @@ const HomeHero = () => {
         <p className="mt-4 text-base sm:text-lg md:text-xl lg:text-2xl text-center">
           Brace Yourself For A Whole New Adventure
         </p>
-        <ArrowButton text="Let's Get Started" href="/lms/dashboard" className="mt-8" />
+        <ArrowButton text="Let's Get Started" href="/lms" className="mt-8" />
       </div>
-
-      {/* Image Section */}
       <div className="mt-12 w-full flex justify-center px-4 md:px-0">
         <Image
           src="/oplab.jpg" // Replace with your image path

@@ -2,7 +2,7 @@ import React from 'react';
 
 interface AssignmentCardProps {
     title: string;
-    details: string;
+    details: React.ReactNode;
     openDate: string;
     closeDate: string;
 }

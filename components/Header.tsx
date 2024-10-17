@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { dmSans } from "../styles/font";
 import MobileNav from "./MobileNav";
+import { Button } from "./ui/button";
 
 const Header = () => {
   const [isActivityOpen, setIsActivityOpen] = useState(false);
@@ -89,13 +90,9 @@ const Header = () => {
         </div>
 
         <div className="flex items-center">
-          <a
-            href="/registration"
-            onClick={(e) => handleNavigationClick("registration", e)}
-            className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700"
-          >
-            Register Now
-          </a>
+          <Button className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700">
+            <Link href="/registration">Register Now</Link>
+          </Button>
         </div>
       </nav>
       <MobileNav />

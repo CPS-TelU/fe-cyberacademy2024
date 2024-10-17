@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface AssignmentCardProps {
     title: string;
     deadline: string;
@@ -21,9 +23,11 @@ export default function AssignmentCard({ title, deadline, description, time }: A
                             <p className="text-[#5B5B5B] text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl">Deadline at: {time}</p>
                         </div>
                     </div>
-                    <button className="w-full md:w-auto px-3 py-2 sm:px-4 sm:py-2 md:px-5 md:py-3 bg-[#BA2025] text-white text-xs sm:text-sm md:text-base lg:text-lg rounded shadow">
-                        Attempt Task
-                    </button>
+                    <Link href="/lms/mycourses/coursedetail/assignment" passHref>
+                            <button className="w-full md:w-auto px-3 py-2 sm:px-4 sm:py-2 md:px-5 md:py-3 bg-[#BA2025] text-white text-xs sm:text-sm md:text-base lg:text-lg rounded-xl shadow-lg ">
+                                Attempt Task
+                            </button>
+                    </Link>
                 </div>
             </div>
         </div>

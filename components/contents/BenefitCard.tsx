@@ -25,7 +25,7 @@ export function BenefitCard() {
       title: "TAK",
       description: "Time and Attendance",
       image: "/kartu.png",
-      rotate: "x" as const,
+      rotate: "y" as const,
     },
   ];
 
