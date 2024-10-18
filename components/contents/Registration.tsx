@@ -3,8 +3,9 @@
 import { poppins } from "@/styles/font";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import SuccessAlert from "../ui/Alerts"; 
+import SuccessAlert from "../ui/Alerts";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 const RegistrationPage = () => {
   const [formData, setFormData] = useState({
@@ -21,10 +22,12 @@ const RegistrationPage = () => {
     document: "",
     github: "",
   });
+
   const [isReady, setIsReady] = useState(false);
   const [showFacultyDropdown, setShowFacultyDropdown] = useState(false);
   const [showYearDropdown, setShowYearDropdown] = useState(false);
   const [showGenderDropdown, setShowGenderDropdown] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
 
   const [alertMessage, setAlertMessage] = useState(""); // State for alert message
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null); // State for success or failure alert
@@ -36,6 +39,8 @@ const RegistrationPage = () => {
   const facultyRef = useRef<HTMLDivElement>(null);
   const yearRef = useRef<HTMLDivElement>(null);
   const genderRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter(); // Initialize router
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -76,22 +81,27 @@ const RegistrationPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // Start loading state
     try {
-      const response = await axios.post(
-        REGISTRATION_API_URL,
-        formData
-      );
+      const response = await axios.post(REGISTRATION_API_URL, formData);
       setIsSuccess(true);
       setAlertMessage("Registration successful!");
+
+      // Redirect to home page after successful registration
+      setTimeout(() => {
+        setLoading(false); // Stop loading state
+        router.push("/"); // Redirect to home page
+      }, 2000); // Wait for 2 seconds to show success message
     } catch (err: any) {
       console.error("Error registering:", err.response?.data?.message);
-      const errorMessage = err.response?.data?.message || "Failed to register. Please try again.";
-      
+      const errorMessage =
+        err.response?.data?.message || "Failed to register. Please try again.";
+
       setIsSuccess(false);
       setAlertMessage(errorMessage);
+      setLoading(false); // Stop loading state if there is an error
     }
   };
-  
 
   const handleCloseAlert = () => {
     setIsSuccess(null);
@@ -322,11 +332,37 @@ const RegistrationPage = () => {
         <button
           type="submit"
           className={`w-full bg-[#BA2025] text-white font-bold py-4 px-4 rounded-lg ${
-            isReady ? "hover:bg-red-500" : "opacity-50 cursor-not-allowed"
+            isReady && !loading ? "hover:bg-red-500" : "opacity-50 cursor-not-allowed"
           }`}
-          disabled={!isReady}
+          disabled={!isReady || loading}
         >
-          Submit
+          {loading ? (
+            <span className="flex items-center justify-center">
+              <svg
+                className="animate-spin h-5 w-5 mr-3 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+              Submitting...
+            </span>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
 
