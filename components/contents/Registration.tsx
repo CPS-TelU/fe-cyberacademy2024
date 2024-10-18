@@ -81,15 +81,17 @@ const RegistrationPage = () => {
         REGISTRATION_API_URL,
         formData
       );
-      console.log(response.data);
       setIsSuccess(true);
       setAlertMessage("Registration successful!");
-    } catch (error) {
-      console.error("Error registering:", error);
+    } catch (err: any) {
+      console.error("Error registering:", err.response?.data?.message);
+      const errorMessage = err.response?.data?.message || "Failed to register. Please try again.";
+      
       setIsSuccess(false);
-      setAlertMessage("Failed to register. Please try again.");
+      setAlertMessage(errorMessage);
     }
   };
+  
 
   const handleCloseAlert = () => {
     setIsSuccess(null);
