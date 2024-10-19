@@ -4,11 +4,24 @@ import Image from "next/image";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
+interface ProfileData {
+  id: number;
+  name: string;
+  email: string;
+  noHp: string;
+  nim: string;
+  Group: string;
+  faculty: string;
+  major: string;
+  className: string;
+}
+
 const Biodata: React.FC = () => {
-  const [profileData, setProfileData] = useState({
+  const [profileData, setProfileData] = useState<ProfileData>({
+    id: 0,
     name: "",
     email: "",
-    phoneNumber: "",
+    noHp: "",
     nim: "",
     Group: "",
     faculty: "",
@@ -30,7 +43,7 @@ const Biodata: React.FC = () => {
       }
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/profile`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/whoami`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}` // Send the token with the request
@@ -38,25 +51,36 @@ const Biodata: React.FC = () => {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to fetch profile data');
+          const errorData = await response.json();  // Get error message from response
+          throw new Error(errorData.message || 'Failed to fetch profile data');
         }
 
-        const data = await response.json();
+        const result = await response.json();
         
-        // Update state with the user's profile data
-        setProfileData({
-          name: data.name,
-          email: data.email,
-          phoneNumber: data.phoneNumber,
-          nim: data.nim,
-          Group: data.Group,
-          faculty: data.faculty,
-          major: data.major,
-          className: data.className
-        });
-      } catch (err) {
+        // Check if the status is true and set the user data
+        if (result.status) {
+          const data = result.data;
+          setProfileData({
+            id: data.id,
+            name: data.name,
+            email: data.email,
+            noHp: data.noHp,
+            nim: data.nim,
+            Group: data.Group || "", // Add a fallback in case Group is not provided
+            faculty: data.faculty,
+            major: data.major,
+            className: data.className
+          });
+        } else {
+          throw new Error(result.message); // Use the message from the API if status is false
+        }
+      } catch (err: unknown) {
         console.error("Error fetching profile data:", err);
-        setError('Unable to load profile data');
+        if (err instanceof Error) {
+          setError(err.message); // Safely access the message property
+        } else {
+          setError('An unknown error occurred'); // Fallback for unknown error types
+        }
       } finally {
         setLoading(false);
       }
@@ -89,7 +113,7 @@ const Biodata: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
           <p><span className="font-semibold">E-mail:</span> {profileData.email}</p>
           <p><span className="font-semibold">Faculty:</span> {profileData.faculty}</p>
-          <p><span className="font-semibold">Phone number:</span> {profileData.phoneNumber}</p>
+          <p><span className="font-semibold">Phone number:</span> {profileData.noHp}</p>
           <p><span className="font-semibold">Major:</span> {profileData.major}</p>
           <p><span className="font-semibold">NIM:</span> {profileData.nim}</p>
           <p><span className="font-semibold">Class:</span> {profileData.className}</p>
