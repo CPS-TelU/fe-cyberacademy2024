@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { poppins } from '@/styles/font';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperclip, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { useState, useEffect, useRef } from "react";
+import { poppins } from "@/styles/font";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 // Define the possible module options as a union of string literals
 type ModuleOption = "Basic Linux" | "Web Development" | "IoT" | "Machine Learning";
@@ -26,7 +26,7 @@ const discussionsData: Record<
     {
       id: 2,
       user: "Agung Kusumadewi Sribawono",
-      time: "1 days ago",
+      time: "1 day ago",
       content:
         "Linux is an open-source operating system (OS) that manages a computer's hardware and resources, such as memory, CPU, and storage.",
     },
@@ -53,7 +53,7 @@ const Discussion = () => {
   const [selectedModul, setSelectedModul] = useState<ModuleOption>("Web Development");
   const [filter, setFilter] = useState("Newest");
   const [newDiscussion, setNewDiscussion] = useState(""); // New state for input
-  const [discussions, setDiscussions] = useState(discussionsData[selectedModul]);
+  const [discussions, setDiscussions] = useState([...discussionsData[selectedModul]]);
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
   const options: ModuleOption[] = ["Basic Linux", "Web Development", "IoT", "Machine Learning"];
@@ -64,16 +64,16 @@ const Discussion = () => {
 
   const handleOptionClick = (option: ModuleOption) => {
     setSelectedModul(option);
-    setDiscussions(discussionsData[option]);
+    setDiscussions([...discussionsData[option]]);
     setIsOpen(false);
   };
 
   const addNewDiscussion = () => {
     if (newDiscussion.trim() === "") return; // Prevent adding empty content
-    const newId = discussions.length + 1;
+    const newId = discussions.length + Date.now(); // Use timestamp for a more unique id
     const newEntry = {
       id: newId,
-      user: "New User", // You can change this to a dynamic value
+      user: "New User", // This should be dynamically set, for now, it's a placeholder
       time: "Just now",
       content: newDiscussion,
     };
@@ -97,8 +97,8 @@ const Discussion = () => {
   return (
     <section className={`p-4 md:p-10 lg:p-12 ml-0 md:ml-10 ${poppins.className}`}>
       <h1 className="text-red-600 text-2xl md:text-4xl lg:text-5xl font-bold mt-10">Forum Discussion</h1>
-      
-      <div className="flex items-center border border-gray-100 p-4 rounded-2xl bg-white shadow-lg mt-6">
+
+      <div className="flex items-center border border-gray-100 p-4 rounded-2xl bg-white shadow-lg mt-6 w-full max-w-5xl mx-auto">
         <FontAwesomeIcon icon={faPaperclip} className="w-6 h-6 text-gray-400 mr-3 cursor-pointer hover:text-red-600 hover:scale-110 transition-all duration-300" />
         <input
           type="text"
@@ -109,9 +109,9 @@ const Discussion = () => {
         />
         <FontAwesomeIcon icon={faPaperPlane} onClick={addNewDiscussion} className="w-6 h-6 text-gray-400 cursor-pointer mr-3 hover:text-red-600 hover:scale-110 transition-all duration-300" />
       </div>
-      
-      <div className="flex flex-col md:flex-row mt-6 md:mt-10">
-        <div className="w-full md:w-1/3 lg:w-1/4 bg-white border border-gray-100 p-4 md:p-6 shadow-lg rounded-2xl h-auto md:h-[240px]">
+
+      <div className="flex flex-col md:flex-row mt-6 md:mt-10 w-full max-w-7xl mx-auto">
+        <div className="w-full md:w-1/3 lg:w-1/4 bg-white border border-gray-100 p-4 md:p-6 shadow-lg rounded-2xl h-auto md:h-[240px] mb-6 md:mb-0">
           <h2 className="font-bold mb-4">Filter Discussion</h2>
           <div className="border-b border-gray-300 mb-4">
             <label className="block mb-2">
@@ -144,8 +144,8 @@ const Discussion = () => {
             className="border border-gray-100 p-2 rounded w-full rounded-3xl mb-6 shadow-lg"
           />
         </div>
-        
-        <div className="w-full md:w-2/3 lg:w-3/4 mt-6 md:mt-0 md:ml-6 lg:ml-10">
+
+        <div className="w-full md:w-2/3 lg:w-3/4 md:ml-6 lg:ml-10">
           <div className="relative w-full mb-6" ref={selectRef}>
             <button
               onClick={handleDropdown}
@@ -169,18 +169,17 @@ const Discussion = () => {
             )}
           </div>
 
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-col gap-6 justify-start items-center w-full">
             {discussions.map((discussion) => (
               <div
                 key={discussion.id}
-                className="border border-gray-100 p-4 rounded mb-4 bg-white shadow-lg rounded-3xl flex flex-col justify-between w-full sm:w-[300px] md:w-[400px] lg:w-[800px] xl:w-[900px] 2xl:w-[900px]"
-                style={{ height: "auto", overflowY: "auto" }} // Removed fixed width to allow responsiveness
+                className="border border-gray-100 p-6 rounded mb-6 bg-white shadow-lg rounded-3xl w-full max-w-3xl"
               >
-                <div className="flex items-center mb-2">
-                  <div className="w-10 h-10 bg-red-600 rounded-full flex justify-center items-center text-white font-bold mr-3">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-red-600 rounded-full flex justify-center items-center text-white font-bold mr-3">
                     {discussion.user.charAt(0).toUpperCase()}
                   </div>
-                  <div> 
+                  <div>
                     <h3 className="font-bold">{discussion.user}</h3>
                     <span className="text-gray-500 text-sm">{discussion.time}</span>
                   </div>
