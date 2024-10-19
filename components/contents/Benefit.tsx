@@ -7,7 +7,6 @@ import { SkeletonBenefit } from "../ui/SkeletonCard";
 
 const Benefit = () => {
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
   
     useEffect(() => {
       const timer = setTimeout(() => {
@@ -27,7 +26,7 @@ const Benefit = () => {
         <section className="p-12">
             <div>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold items-center text-center">
-                    What's the<span className="gradient-text"> Benefit</span> you ask?</h1>
+                    What&apos;s the<span className="gradient-text"> Benefit</span> you ask?</h1>
             </div>
             <BenefitCard/>
         </section>

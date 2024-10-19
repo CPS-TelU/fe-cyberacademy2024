@@ -1,7 +1,8 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const Biodata: React.FC = () => {
   const [profileData, setProfileData] = useState({

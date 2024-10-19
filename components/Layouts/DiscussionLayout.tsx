@@ -1,4 +1,3 @@
-import Discussion from "../contents/Discussion"
 import ModulDiscussion from "../contents/ModulDiscussion"
 import SectionContainer from "../utils/SectionContainer"
 

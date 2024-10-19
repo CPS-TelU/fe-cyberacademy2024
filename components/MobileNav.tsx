@@ -73,8 +73,7 @@ const MobileNav = () => {
         {/* Menu Button */}
         <div className="flex space-x-3 rtl:space-x-reverse">
           <a
-            href="/register"
-            target="_blank"
+            href="/registration"
             rel="noopener noreferrer"
             className="bg-red-600 text-white text-m px-4 py-2 rounded-full hover:bg-red-700"
             onClick={closeMenu}

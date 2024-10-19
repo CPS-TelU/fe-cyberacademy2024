@@ -1,7 +1,6 @@
-import React from "react";
 import Image from "next/image";
 import { FaInstagram, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import { dmSans, poppins } from "../styles/font";
+import { poppins } from "../styles/font";
 
 
 const Footer = () => {

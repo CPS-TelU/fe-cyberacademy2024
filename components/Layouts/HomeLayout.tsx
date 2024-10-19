@@ -5,7 +5,6 @@ import Benefit from "../contents/Benefit";
 import Requirements from "../contents/Requirements";
 import Medpart from "../contents/Medpart";
 import{ AppleCardsCarouselDemo } from "../contents/Knowlede-v2";
-import Knowledge from "../contents/Knowledge";
 
 const HomeLayout = () => {
   return (

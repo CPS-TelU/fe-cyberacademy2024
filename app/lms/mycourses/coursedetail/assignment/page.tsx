@@ -1,5 +1,4 @@
 import AssignmentPageLayout from "@/components/Layouts/AssignmentPageLayout";
-import { poppins } from "@/styles/font";
 
 export default function AssignmentPage() {
     return (

@@ -1,4 +1,3 @@
-import { poppins } from "@/styles/font";
 import FlipCard from "@/components/ui/FlipCard";
 
 export function BenefitCard() {
@@ -22,13 +21,13 @@ export function BenefitCard() {
       rotate: "y" as const,
     },
     {
-      title: "TAK",
+      title: "DEVELOPMENT TOOLS",
       description: "Time and Attendance",
       image: "/kartu.png",
       rotate: "y" as const,
     },
   ];
-
+  
   return (
     <div className="p-4 sm:p-6 md:p-8 lg:p-30 ">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6 justify-items-center mx-auto">

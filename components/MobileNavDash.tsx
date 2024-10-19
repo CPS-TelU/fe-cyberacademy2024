@@ -14,10 +14,6 @@ const MobileNavDash = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const toggleActivityDropdown = () => {
-    setIsActivityOpen(!isActivityOpen);
-  };
-
   const closeMenu = () => {
     setIsMenuOpen(false);
     setIsActivityOpen(false); // Close Activity dropdown when closing menu

@@ -1,8 +1,6 @@
-"use client";
-
+"use client";;
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { poppins } from "@/styles/font";
 import { SkeletonAbout }  from "../ui/SkeletonCard";
 
 const About = () => {

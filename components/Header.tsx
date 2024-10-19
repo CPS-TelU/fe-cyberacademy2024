@@ -7,9 +7,6 @@ import MobileNav from "./MobileNav";
 import { Button } from "./ui/button";
 
 const Header = () => {
-  const [isActivityOpen, setIsActivityOpen] = useState(false);
-  const [isScrollingUp, setIsScrollingUp] = useState(true); // New state for tracking scroll direction
-  const lastScrollY = useRef(0); // Reference to store last scroll position
   const [activeSection, setActiveSection] = useState<string>("home"); // Track active section
 
   const sections = ["home", "about", "benefit", "course", "requirement", "medpart"];
@@ -60,8 +57,7 @@ const Header = () => {
 
   return (
     <header
-      className={`${dmSans.className} fixed top-0 w-full transition-transform duration-300 z-[9999] ${
-        isScrollingUp ? "translate-y-0" : "-translate-y-full"
+      className={`${dmSans.className} fixed top-0 w-full transition-transform duration-300 z-[9999] 
       }`}
     >
       <nav

@@ -5,10 +5,11 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import SuccessAlert from "../ui/Alerts";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { FileUp } from "lucide-react";
 
 const RegistrationPage = () => {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     name: "",
     nim: "",
     className: "",
@@ -16,21 +17,20 @@ const RegistrationPage = () => {
     noHp: "",
     gender: "Select your gender",
     faculty: "Select your faculty",
-    year: "Select your year of enrollment",
+    year: "Select your year",
     major: "",
-    password: "",
     document: "",
-    github: "",
-  });
+  };
 
+  const [formData, setFormData] = useState(initialFormData);
   const [isReady, setIsReady] = useState(false);
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); // State untuk checkbox
+  const [alertMessage, setAlertMessage] = useState(""); // State for alert message
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null); // State for success or failure alert
   const [showFacultyDropdown, setShowFacultyDropdown] = useState(false);
   const [showYearDropdown, setShowYearDropdown] = useState(false);
   const [showGenderDropdown, setShowGenderDropdown] = useState(false);
-  const [loading, setLoading] = useState(false); // Loading state
-
-  const [alertMessage, setAlertMessage] = useState(""); // State for alert message
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null); // State for success or failure alert
+  const [loading, setLoading] = useState(false);
 
   const faculties = ["Electrical Engineering", "Industrial Engineering"];
   const years = ["2022", "2023", "2024"];
@@ -40,29 +40,42 @@ const RegistrationPage = () => {
   const yearRef = useRef<HTMLDivElement>(null);
   const genderRef = useRef<HTMLDivElement>(null);
 
-  const router = useRouter(); // Initialize router
+  useEffect(() => {
+    const allFieldsValid =
+      formData.name.trim() !== "" &&
+      formData.nim.trim() !== "" &&
+      formData.className.trim() !== "" &&
+      formData.email.trim() !== "" &&
+      formData.noHp.trim() !== "" &&
+      formData.major.trim() !== "" &&
+      formData.document.trim() !== "" &&
+      formData.faculty !== "Select your faculty" &&
+      formData.year !== "Select your year" &&
+      formData.gender !== "Select your gender";
+
+    setIsReady(allFieldsValid);
+  }, [formData]);
+
+  const handleCheckboxChange = () => {
+    if (isReady) {
+      setIsCheckboxChecked(!isCheckboxChecked);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        facultyRef.current &&
-        !facultyRef.current.contains(event.target as Node)
-      ) {
+      if (facultyRef.current && !facultyRef.current.contains(event.target as Node)) {
         setShowFacultyDropdown(false);
       }
       if (yearRef.current && !yearRef.current.contains(event.target as Node)) {
         setShowYearDropdown(false);
       }
-      if (
-        genderRef.current &&
-        !genderRef.current.contains(event.target as Node)
-      ) {
+      if (genderRef.current && !genderRef.current.contains(event.target as Node)) {
         setShowGenderDropdown(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -81,25 +94,26 @@ const RegistrationPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // Start loading state
+
+    setLoading(true);
+
     try {
-      const response = await axios.post(REGISTRATION_API_URL, formData);
+      await axios.post(REGISTRATION_API_URL, formData);
       setIsSuccess(true);
       setAlertMessage("Registration successful!");
-
-      // Redirect to home page after successful registration
-      setTimeout(() => {
-        setLoading(false); // Stop loading state
-        router.push("/"); // Redirect to home page
-      }, 2000); // Wait for 2 seconds to show success message
-    } catch (err: any) {
-      console.error("Error registering:", err.response?.data?.message);
-      const errorMessage =
-        err.response?.data?.message || "Failed to register. Please try again.";
-
-      setIsSuccess(false);
-      setAlertMessage(errorMessage);
-      setLoading(false); // Stop loading state if there is an error
+      setFormData(initialFormData);
+      setIsCheckboxChecked(false); // Reset checkbox
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err) && err.response) {
+        const errorMessage =
+          err.response.data?.message || "Failed to register. Please try again.";
+        setIsSuccess(false);
+        setAlertMessage(errorMessage);
+      } else {
+        setAlertMessage("An unknown error occurred.");
+      }
+    } finally {
+      setLoading(false); // Set loading to false after submission
     }
   };
 
@@ -128,7 +142,6 @@ const RegistrationPage = () => {
           The first step to start your journey
         </p>
       </div>
-
 
       <form
         onSubmit={handleSubmit}
@@ -163,7 +176,12 @@ const RegistrationPage = () => {
               type="text"
               name="className"
               value={formData.className}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  className: e.target.value.toUpperCase(),
+                })
+              }
               className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500"
               placeholder="TT-45-09"
             />
@@ -285,6 +303,42 @@ const RegistrationPage = () => {
           />
         </div>
         <div className="mb-4">
+                <Alert>
+                  <FileUp className="h-4 w-4" />
+                  <AlertTitle>Attention !!</AlertTitle>
+                  <AlertDescription>
+                    Ensure that all recruitment documents are in accordance with
+                    the terms and conditions, such as:
+                    <br />
+                    a. CV in ATS-Friendly Format
+                    <div className="text-blue-500">
+                      <Link
+                        href="https://drive.google.com/file/d/1zaVxmaSS8HRxb9tKd6Yw8Cv2sKUELHJR/view?usp=drivesdk"
+                        target="_blank"
+                      >
+                        🔗Link Contoh CV ATS
+                      </Link>
+                    </div>
+                    b. Formal Photo 4x6 & Portfolio (if there is one, it&apos;s
+                    better)
+                    <br />
+                    c. KHS
+                    <br />
+                    d. Motivation Letter
+                    <div className="text-blue-500">
+                      <Link
+                        href="https://drive.google.com/file/d/1LynFik_Kq7a7fy-FJLHeaZTV9Atlct1b/view?usp=drivesdk"
+                        target="_blank"
+                      >
+                        🔗Link Contoh Motivation Letter
+                      </Link>
+                    </div>
+                    For more detailed information, please refer to the homepage
+                    of this website.
+                  </AlertDescription>
+                </Alert>
+              </div>
+        <div className="mb-4">
           <label className="block text-sm font-medium">Document</label>
           <input
             type="text"
@@ -295,39 +349,30 @@ const RegistrationPage = () => {
             placeholder="Paste your document link here"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">GitHub Account</label>
-          <input
-            type="text"
-            name="github"
-            value={formData.github}
-            onChange={handleChange}
-            className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500"
-            placeholder="https://github.com/sayyid"
-          />
-        </div>
-
         <div className="flex items-center mb-4 mt-4">
           <input
             type="checkbox"
-            checked={isReady}
-            onChange={() => setIsReady(!isReady)}
-            className="h-4 w-4 text-red-500 focus:ring-red-400 border-gray-300 rounded"
+            checked={isCheckboxChecked}
+            onChange={handleCheckboxChange}
+            disabled={!isReady} // Checkbox dinonaktifkan jika form belum valid
+            className={`h-4 w-4 text-red-500 focus:ring-red-400 border-gray-300 rounded ${
+              isReady ? "" : "opacity-50 cursor-not-allowed"
+            }`}
           />
           <label className="ml-2 text-sm">
-            I'm Ready To Start My Journey
+            I&apos;m Ready To Start My Journey
           </label>
         </div>
 
         {alertMessage && (
-        <div className="mb-4 w-full max-w-lg md:max-w-4xl">
-          <SuccessAlert
-            message={alertMessage}
-            isSuccess={isSuccess}
-            onClose={handleCloseAlert}
-          />
-        </div>
-      )}
+          <div className="mb-4 w-full max-w-lg md:max-w-4xl">
+            <SuccessAlert
+              message={alertMessage}
+              isSuccess={isSuccess}
+              onClose={handleCloseAlert}
+            />
+          </div>
+        )}
 
         <button
           type="submit"
@@ -365,8 +410,6 @@ const RegistrationPage = () => {
           )}
         </button>
       </form>
-
-     
     </div>
   );
 };

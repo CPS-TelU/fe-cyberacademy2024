@@ -1,7 +1,6 @@
 import DashboardHero from "../contents/DashboardHero";
 import AnnouncementContent from "../contents/Announcement";
 import AssignmentContent from "../contents/Assignment";
-import SectionContainer from "../utils/SectionContainer";
 
 export default function DashboardLayout() {
   return (

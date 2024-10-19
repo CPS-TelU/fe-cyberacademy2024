@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { dmSans, poppins } from '@/styles/font';
+import { poppins } from '@/styles/font';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperclip, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 

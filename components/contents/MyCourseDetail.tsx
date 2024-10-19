@@ -38,7 +38,7 @@ const MyCourseDetail = () => {
             <div className="text-left p-4 space-y-2">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-600">Basic Linux</h2>
                 <p className="text-gray-700 text-base sm:text-lg lg:text-xl">
-                    Linux is an open-source operating system (OS) that manages a computer's hardware and resources, such as memory, CPU, and storage.
+                    Linux is an open-source operating system (OS) that manages a computer&apos;s hardware and resources, such as memory, CPU, and storage.
                 </p>
             </div>
             <div className="grid gap-4 grid-cols-1 p-4 bg-white rounded-2xl border border-gray-100 shadow-lg">

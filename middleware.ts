@@ -1,23 +1,20 @@
-// app/middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
-  // Retrieve the token from the cookies
+  // Ambil token dari cookies
   const token = req.cookies.get('token');
-  console.log('Token:', token);
+
   if (!token) {
-    // If no token, redirect to the login page
-    console.log('User not authenticated, redirecting to login.');
+    // Jika tidak ada token, redirect ke halaman login
     return NextResponse.redirect(new URL('/login', req.url));
   }
 
-  // Proceed with the request if the user is authenticated
-  console.log('User authenticated, proceeding with request.');
+  // Jika token ada, lanjutkan request
   return NextResponse.next();
 }
 
-// Specify the paths where this middleware should be applied
+// Tentukan rute mana saja yang dilindungi middleware ini
 export const config = {
-  matcher: ['/lms/:path*'], // Protect all routes under /lms
+  matcher: ['/lms/:path*'], // Lindungi semua rute di bawah /lms
 };

@@ -90,7 +90,7 @@ const [isLoading, setIsLoading] = useState(true);
                         }`}
                         onClick={() => setIsOpen3(!isOpen3)}
                     >
-                        <span>KSM</span>
+                        <span>KHS</span>
                         <span className={`${isOpen3 ? 'text-red-600' : 'text-gray-900'}`}>
                             {isOpen3 ? '−' : '+'}
                         </span>
@@ -101,7 +101,7 @@ const [isLoading, setIsLoading] = useState(true);
                         }`}
                     >
                         <div className="py-3 text-sm sm:text-base md:text-lg text-gray-600">
-                        The latest semester transcript should include detailed course grades and formal proof of the student's academic performance.
+                        The latest semester transcript should include detailed course grades and formal proof of the student&apos;s academic performance.
                         </div>
                     </div>
                 </div>
