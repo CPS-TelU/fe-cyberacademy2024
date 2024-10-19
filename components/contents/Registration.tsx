@@ -33,7 +33,7 @@ const RegistrationPage = () => {
 
   const faculties = [
     "Fakultas Teknik Elektro",
-    "Fakultas Komunikasi Sosial",
+    "Fakultas Komunikasi dan Ilmu Sosial",
     "Fakultas Informatika",
     "Fakultas Rekayasa Industri",
     "Fakultas Ekonomi Bisnis",
@@ -111,7 +111,7 @@ const RegistrationPage = () => {
     try {
       await axios.post(REGISTRATION_API_URL, formData);
       setIsSuccess(true);
-      setAlertMessage("Registrasi berhasil!");
+      setAlertMessage("Registrasi berhasil! Silakan cek email Anda secara berkala untuk informasi lebih lanjut.");
       setFormData(initialFormData);
       setIsCheckboxChecked(false);
     } catch (err: unknown) {
