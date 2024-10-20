@@ -377,9 +377,9 @@ const RegistrationPage = () => {
         <button
           type="submit"
           className={`w-full bg-[#BA2025] text-white font-bold py-4 px-4 rounded-lg ${
-            isReady && !loading ? "hover:bg-red-500" : "opacity-50 cursor-not-allowed"
+            isReady && !loading && isCheckboxChecked ? "hover:bg-red-500" : "opacity-50 cursor-not-allowed"
           }`}
-          disabled={!isReady || loading}
+          disabled={!isReady && !isCheckboxChecked}
         >
           {loading ? (
             <span className="flex items-center justify-center">
