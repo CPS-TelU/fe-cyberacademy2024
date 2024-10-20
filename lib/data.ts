@@ -51,7 +51,7 @@ export const medpartImages = [
       },
       {
         id : 11,
-        imageSrc: "/medpart/siskom.png",
+        imageSrc: "/medpart/Siskom.png",
         url:"https://www.instagram.com/labsiskom/",
       },
       {
