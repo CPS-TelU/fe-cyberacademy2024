@@ -1,17 +1,16 @@
 "use client";
 
+
 import { useState, useEffect, useRef } from "react";
 import { poppins } from "@/styles/font";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
-// Define the possible module options as a union of string literals
 type ModuleOption = "Basic Linux" | "Web Development" | "IoT" | "Machine Learning";
 
-// Define discussionsData with keys matching the ModuleOption type
 const discussionsData: Record<
   ModuleOption,
-  { id: number; user: string; time: string; content: string }[]
+  { id: number; user: string; time: string; content: string; replies?: { user: string; content: string }[] }[]
 > = {
   "Web Development": [
     {
@@ -52,9 +51,11 @@ const discussionsData: Record<
 const Discussion = () => {
   const [selectedModul, setSelectedModul] = useState<ModuleOption>("Web Development");
   const [filter, setFilter] = useState("Newest");
-  const [newDiscussion, setNewDiscussion] = useState(""); // New state for input
+  const [newDiscussion, setNewDiscussion] = useState(""); 
   const [discussions, setDiscussions] = useState([...discussionsData[selectedModul]]);
   const [isOpen, setIsOpen] = useState(false);
+  const [replyingTo, setReplyingTo] = useState<number | null>(null); // State to track which discussion is being replied to
+  const [replyContent, setReplyContent] = useState<string>(""); // Track reply content
   const selectRef = useRef<HTMLDivElement>(null);
   const options: ModuleOption[] = ["Basic Linux", "Web Development", "IoT", "Machine Learning"];
 
@@ -69,16 +70,35 @@ const Discussion = () => {
   };
 
   const addNewDiscussion = () => {
-    if (newDiscussion.trim() === "") return; // Prevent adding empty content
-    const newId = discussions.length + Date.now(); // Use timestamp for a more unique id
+    if (newDiscussion.trim() === "") return;
+    const newId = discussions.length + Date.now();
     const newEntry = {
       id: newId,
-      user: "New User", // This should be dynamically set, for now, it's a placeholder
+      user: "New User", 
       time: "Just now",
       content: newDiscussion,
     };
     setDiscussions((prev) => [...prev, newEntry]);
-    setNewDiscussion(""); // Clear the input field
+    setNewDiscussion("");
+  };
+
+  const handleReply = (discussionId: number) => {
+    if (replyContent.trim() === "") return; // Prevent empty reply
+    setDiscussions((prevDiscussions) =>
+      prevDiscussions.map((discussion) =>
+        discussion.id === discussionId
+          ? {
+              ...discussion,
+              replies: [
+                ...(discussion.replies || []),
+                { user: "New User", content: replyContent },
+              ],
+            }
+          : discussion
+      )
+    );
+    setReplyingTo(null);
+    setReplyContent("");
   };
 
   useEffect(() => {
@@ -98,20 +118,20 @@ const Discussion = () => {
     <section className={`p-4 md:p-10 lg:p-12 ml-0 md:ml-10 ${poppins.className}`}>
       <h1 className="text-red-600 text-2xl md:text-4xl lg:text-5xl font-bold mt-10">Forum Discussion</h1>
 
-      <div className="flex items-center border border-gray-100 p-4 rounded-2xl bg-white shadow-lg mt-6 w-full max-w-5xl mx-auto">
+      <div className="flex items-center border border-gray-100 p-4 rounded-2xl bg-white shadow-lg mt-6 w-full max-w-7xl mx-auto min-w-[300px] sm:min-w-[500px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[700px] 2xl:min-w-[900px]">
         <FontAwesomeIcon icon={faPaperclip} className="w-6 h-6 text-gray-400 mr-3 cursor-pointer hover:text-red-600 hover:scale-110 transition-all duration-300" />
         <input
           type="text"
           value={newDiscussion}
           onChange={(e) => setNewDiscussion(e.target.value)}
           placeholder="Type New Discussion Here"
-          className="flex-1 outline-none bg-transparent"
+          className="flex-1 outline-none bg-transparent "
         />
         <FontAwesomeIcon icon={faPaperPlane} onClick={addNewDiscussion} className="w-6 h-6 text-gray-400 cursor-pointer mr-3 hover:text-red-600 hover:scale-110 transition-all duration-300" />
       </div>
 
       <div className="flex flex-col md:flex-row mt-6 md:mt-10 w-full max-w-7xl mx-auto">
-        <div className="w-full md:w-1/3 lg:w-1/4 bg-white border border-gray-100 p-4 md:p-6 shadow-lg rounded-2xl h-auto md:h-[240px] mb-6 md:mb-0">
+        <div className="w-full md:w-1/3 lg:w-1/4 bg-white border border-gray-100 p-4 md:p-6 shadow-lg rounded-2xl h-auto md:h-[240px] mb-6 md:mb-0 min-w-[200px] sm:min-w-[500px] md:min-w-[200px] lg:min-w-[250px] xl:min-w-[300px] 2xl:min-w-[300px] max-w-[200px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[250px] xl:max-w-[200px] 2xl:max-w-[300px]">
           <h2 className="font-bold mb-4">Filter Discussion</h2>
           <div className="border-b border-gray-300 mb-4">
             <label className="block mb-2">
@@ -173,7 +193,7 @@ const Discussion = () => {
             {discussions.map((discussion) => (
               <div
                 key={discussion.id}
-                className="border border-gray-100 p-6 rounded mb-6 bg-white shadow-lg rounded-3xl w-full max-w-3xl"
+                className="border border-gray-100 p-6 rounded mb-6 bg-white shadow-lg rounded-3xl w-full  min-w-[300px] sm:min-w-[500px] md:min-w-[400px] lg:min-w-[600px] xl:min-w-[700px] 2xl:min-w-[900px] max-w-[300px] sm:max-w-[500px] md:max-w-[400px] lg:max-w-[600px] xl:max-w-[700px] 2xl:max-w-[900px]"
               >
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-red-600 rounded-full flex justify-center items-center text-white font-bold mr-3">
@@ -185,7 +205,49 @@ const Discussion = () => {
                   </div>
                 </div>
                 <p className="mb-4">{discussion.content}</p>
-                <button className="text-red-600 font-bold text-left">Reply</button>
+
+                {discussion.replies && (
+                  <div className="ml-10 mt-4 ">
+                    {discussion.replies.map((reply, index) => (
+                      <div key={index} className="border-t border-gray-300 pt-4">
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 bg-red-600 rounded-full flex justify-center items-center text-white font-bold mr-3">
+                          {reply.user.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <h4 className="font-bold">{reply.user}</h4>
+                          <span className="text-gray-500 text-sm">Just now</span> {/* You may want to manage reply timestamps */}
+                          <p>{reply.content}</p>
+                        </div>
+                      </div>
+                    </div>
+                    ))}
+                  </div>
+                )}
+
+                <button
+                  onClick={() => setReplyingTo(discussion.id)}
+                  className="text-red-600 font-bold mt-4 hover:underline"
+                >
+                  Reply
+                </button>
+
+                {replyingTo === discussion.id && (
+                  <div className="mt-4 flex items-center">
+                    <input
+                      type="text"
+                      value={replyContent}
+                      onChange={(e) => setReplyContent(e.target.value)}
+                      placeholder="Type your reply here"
+                      className="border border-gray-100 p-2 rounded-lg flex-1"
+                    />
+                    <FontAwesomeIcon
+                      icon={faPaperPlane}
+                      onClick={() => handleReply(discussion.id)}
+                      className="w-6 h-6 text-gray-400 cursor-pointer ml-3 hover:text-red-600 hover:scale-110 transition-all duration-300"
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>
