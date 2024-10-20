@@ -6,10 +6,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie"; // Import js-cookie
 import axios from "axios";
+import { Eye, EyeOff } from "react-feather"; // Import eye icons
 
 const LoginPage: React.FC = () => {
   const [nim, setNim] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -21,10 +23,6 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-
-    // Log form data before submitting
-    console.log("Submitting login with:", { nim, password });
-
     try {
       const response = await axios.post(
         LOGIN_API_URL,
@@ -39,19 +37,18 @@ const LoginPage: React.FC = () => {
           },
         }
       );
-
       const { token } = response.data;
       Cookies.set("token", token, { expires: 7 }); // Simpan token dalam cookie selama 7 hari
       console.log("Login success, token saved. Redirecting to LMS...");
       router.push("/lms"); // Redirect ke dashboard LMS
     } catch (err) {
       // Tangani error dan tampilkan pesan error
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : "Login failed. Please check your credentials.";
-      console.error("Caught error:", errorMessage);
-      setError(errorMessage);
+      if (axios.isAxiosError(err) && err.response) {
+        const errorMessage = err.response.data.message || "Login failed. Please check your credentials.";
+        setError(errorMessage);
+      } else {
+        setError("An unknown error occurred. Please try again later.");
+      }
     } finally {
       setLoading(false);
     }
@@ -97,15 +94,12 @@ const LoginPage: React.FC = () => {
                 required
               />
             </div>
-            <div className="mb-6">
-              <label
-                htmlFor="password"
-                className="block text-gray-700 font-bold"
-              >
+            <div className="mb-6 relative">
+              <label htmlFor="password" className="block text-gray-700 font-bold">
                 Password
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="Enter your password"
                 value={password}
@@ -113,6 +107,13 @@ const LoginPage: React.FC = () => {
                 className="w-full px-4 py-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-red-300"
                 required
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-10 text-gray-500"
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
             </div>
             {error && (
               <div className="mb-4 text-red-600" aria-live="assertive">

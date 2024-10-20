@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { FileUp } from "lucide-react";
 
+
 const RegistrationPage = () => {
   const initialFormData = {
     name: "",
@@ -15,26 +16,34 @@ const RegistrationPage = () => {
     className: "",
     email: "",
     noHp: "",
-    gender: "Select your gender",
-    faculty: "Select your faculty",
-    year: "Select your year",
+    gender: "Pilih jenis kelamin",
+    faculty: "Pilih fakultas",
+    year: "Pilih tahun masuk",
     major: "",
     document: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
   const [isReady, setIsReady] = useState(false);
-  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); // State untuk checkbox
-  const [alertMessage, setAlertMessage] = useState(""); // State for alert message
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null); // State for success or failure alert
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const [showFacultyDropdown, setShowFacultyDropdown] = useState(false);
   const [showYearDropdown, setShowYearDropdown] = useState(false);
   const [showGenderDropdown, setShowGenderDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const faculties = ["Electrical Engineering", "Industrial Engineering"];
+  const faculties = [
+    "Fakultas Teknik Elektro",
+    "Fakultas Komunikasi dan Ilmu Sosial",
+    "Fakultas Informatika",
+    "Fakultas Rekayasa Industri",
+    "Fakultas Ekonomi Bisnis",
+    "Fakultas Industri Kreatif",
+    "Fakultas Ilmu Terapan",
+  ];
   const years = ["2022", "2023", "2024"];
-  const genders = ["Male", "Female"];
+  const genders = ["Laki-Laki", "Perempuan"];
 
   const facultyRef = useRef<HTMLDivElement>(null);
   const yearRef = useRef<HTMLDivElement>(null);
@@ -49,9 +58,9 @@ const RegistrationPage = () => {
       formData.noHp.trim() !== "" &&
       formData.major.trim() !== "" &&
       formData.document.trim() !== "" &&
-      formData.faculty !== "Select your faculty" &&
-      formData.year !== "Select your year" &&
-      formData.gender !== "Select your gender";
+      formData.faculty !== "Pilih fakultas" &&
+      formData.year !== "Pilih tahun masuk" &&
+      formData.gender !== "Pilih jenis kelamin";
 
     setIsReady(allFieldsValid);
   }, [formData]);
@@ -64,13 +73,19 @@ const RegistrationPage = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (facultyRef.current && !facultyRef.current.contains(event.target as Node)) {
+      if (
+        facultyRef.current &&
+        !facultyRef.current.contains(event.target as Node)
+      ) {
         setShowFacultyDropdown(false);
       }
       if (yearRef.current && !yearRef.current.contains(event.target as Node)) {
         setShowYearDropdown(false);
       }
-      if (genderRef.current && !genderRef.current.contains(event.target as Node)) {
+      if (
+        genderRef.current &&
+        !genderRef.current.contains(event.target as Node)
+      ) {
         setShowGenderDropdown(false);
       }
     };
@@ -100,17 +115,17 @@ const RegistrationPage = () => {
     try {
       await axios.post(REGISTRATION_API_URL, formData);
       setIsSuccess(true);
-      setAlertMessage("Registration successful!");
+      setAlertMessage("Registrasi berhasil! Silakan cek email Anda secara berkala untuk informasi lebih lanjut.");
       setFormData(initialFormData);
-      setIsCheckboxChecked(false); // Reset checkbox
+      setIsCheckboxChecked(false);
     } catch (err: unknown) {
       if (axios.isAxiosError(err) && err.response) {
         const errorMessage =
-          err.response.data?.message || "Failed to register. Please try again.";
+          err.response.data?.message || "Gagal mendaftar. Silakan coba lagi.";
         setIsSuccess(false);
         setAlertMessage(errorMessage);
       } else {
-        setAlertMessage("An unknown error occurred.");
+        setAlertMessage("Terjadi kesalahan yang tidak diketahui.");
       }
     } finally {
       setLoading(false); // Set loading to false after submission
@@ -131,15 +146,15 @@ const RegistrationPage = () => {
           href="/"
           className="bg-[#BA2025] text-white p-3 rounded-full hover:bg-red-700"
         >
-          <img src="/arrow-back-white.png" alt="Back" className="w-4 h-4" />
+          <img src="/arrow-back-white.png" alt="Kembali" className="w-4 h-4" />
         </Link>
       </div>
       <div className="text-center mb-5">
         <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#BA2025] to-[#133042] text-transparent bg-clip-text px-4 md:px-8">
-          REGISTRATION FORM
+          FORMULIR PENDAFTARAN
         </h1>
         <p className="text-lg font-medium text-gray-700 mt-2">
-          The first step to start your journey
+          Langkah pertama untuk memulai perjalanan Anda
         </p>
       </div>
 
@@ -148,7 +163,7 @@ const RegistrationPage = () => {
         className="bg-white px-6 md:px-16 py-8 rounded-2xl shadow-2xl w-full max-w-lg md:max-w-4xl mb-8 border border-gray-100"
       >
         <div className="mb-4">
-          <label className="block text-sm font-medium">Name</label>
+          <label className="block text-sm font-medium">Nama</label>
           <input
             type="text"
             name="name"
@@ -171,7 +186,7 @@ const RegistrationPage = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium">Class</label>
+            <label className="block text-sm font-medium">Kelas</label>
             <input
               type="text"
               name="className"
@@ -200,7 +215,7 @@ const RegistrationPage = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium">WhatsApp Number</label>
+            <label className="block text-sm font-medium">Nomor WhatsApp</label>
             <input
               type="text"
               name="noHp"
@@ -211,7 +226,7 @@ const RegistrationPage = () => {
             />
           </div>
           <div ref={genderRef} className="relative mb-4">
-            <label className="block text-sm font-medium">Gender</label>
+            <label className="block text-sm font-medium">Jenis Kelamin</label>
             <div
               className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg cursor-pointer"
               onClick={() => setShowGenderDropdown(!showGenderDropdown)}
@@ -238,7 +253,7 @@ const RegistrationPage = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div ref={facultyRef} className="relative mb-4">
-            <label className="block text-sm font-medium">Faculty</label>
+            <label className="block text-sm font-medium">Fakultas</label>
             <div
               className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg cursor-pointer"
               onClick={() => setShowFacultyDropdown(!showFacultyDropdown)}
@@ -263,9 +278,7 @@ const RegistrationPage = () => {
             )}
           </div>
           <div ref={yearRef} className="relative mb-4">
-            <label className="block text-sm font-medium">
-              Year of Enrollment
-            </label>
+            <label className="block text-sm font-medium">Tahun Masuk</label>
             <div
               className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg cursor-pointer"
               onClick={() => setShowYearDropdown(!showYearDropdown)}
@@ -292,61 +305,58 @@ const RegistrationPage = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium">Major</label>
+          <label className="block text-sm font-medium">Jurusan</label>
           <input
             type="text"
             name="major"
             value={formData.major}
             onChange={handleChange}
             className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500"
-            placeholder="Informatics Engineering"
+            placeholder="Teknik Telekomunikasi"
           />
         </div>
         <div className="mb-4">
-                <Alert>
-                  <FileUp className="h-4 w-4" />
-                  <AlertTitle>Attention !!</AlertTitle>
-                  <AlertDescription>
-                    Ensure that all recruitment documents are in accordance with
-                    the terms and conditions, such as:
-                    <br />
-                    a. CV in ATS-Friendly Format
-                    <div className="text-blue-500">
-                      <Link
-                        href="https://drive.google.com/file/d/1zaVxmaSS8HRxb9tKd6Yw8Cv2sKUELHJR/view?usp=drivesdk"
-                        target="_blank"
-                      >
-                        🔗Link Contoh CV ATS
-                      </Link>
-                    </div>
-                    b. Formal Photo 4x6 & Portfolio (if there is one, it&apos;s
-                    better)
-                    <br />
-                    c. KHS
-                    <br />
-                    d. Motivation Letter
-                    <div className="text-blue-500">
-                      <Link
-                        href="https://drive.google.com/file/d/1LynFik_Kq7a7fy-FJLHeaZTV9Atlct1b/view?usp=drivesdk"
-                        target="_blank"
-                      >
-                        🔗Link Contoh Motivation Letter
-                      </Link>
-                    </div>
-                    For more detailed information, please refer to the homepage
-                    of this website.
-                  </AlertDescription>
-                </Alert>
+          <Alert>
+            <FileUp className="h-4 w-4" />
+            <AlertTitle>Perhatian !!</AlertTitle>
+            <AlertDescription>
+              Pastikan semua dokumen rekrutmen sesuai dengan syarat dan ketentuan, seperti:
+              <br />
+              a. CV dalam Format ATS-Friendly
+              <div className="text-blue-500">
+                <Link
+                  href="https://drive.google.com/file/d/1zaVxmaSS8HRxb9tKd6Yw8Cv2sKUELHJR/view?usp=drivesdk"
+                  target="_blank"
+                >
+                  🔗Link Contoh CV ATS
+                </Link>
               </div>
+              b. Foto Formal 4x6 & Portfolio (jika ada lebih baik)
+              <br />
+              c. KHS
+              <br />
+              d. Motivation Letter
+              <div className="text-blue-500">
+                <Link
+                  href="https://drive.google.com/file/d/1LynFik_Kq7a7fy-FJLHeaZTV9Atlct1b/view?usp=drivesdk"
+                  target="_blank"
+                >
+                  🔗Link Contoh Motivation Letter
+                </Link>
+              </div>
+              Untuk informasi lebih detail, silakan lihat halaman utama situs web ini.
+            </AlertDescription>
+          </Alert>
+        </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium">Document</label>
+          <label className="block text-sm font-medium">Dokumen</label>
           <input
             type="text"
             name="document"
             value={formData.document}
             onChange={handleChange}
             className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500"
-            placeholder="Paste your document link here"
+            placeholder="Tempelkan link dokumen di sini"
           />
         </div>
         <div className="flex items-center mb-4 mt-4">
@@ -354,13 +364,13 @@ const RegistrationPage = () => {
             type="checkbox"
             checked={isCheckboxChecked}
             onChange={handleCheckboxChange}
-            disabled={!isReady} // Checkbox dinonaktifkan jika form belum valid
+            disabled={!isReady}
             className={`h-4 w-4 text-red-500 focus:ring-red-400 border-gray-300 rounded ${
               isReady ? "" : "opacity-50 cursor-not-allowed"
             }`}
           />
           <label className="ml-2 text-sm">
-            I&apos;m Ready To Start My Journey
+            Saya Siap Memulai Perjalanan Saya
           </label>
         </div>
 
