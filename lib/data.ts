@@ -59,6 +59,96 @@ export const medpartImages = [
         imageSrc: "/medpart/sko.png",
         url:"https://www.instagram.com/opticomm.laboratory/",
       },
+      {
+        id : 13,
+        imageSrc: "/medpart/aptrg.png",
+        url:"https://www.instagram.com/aptrg?igsh=MWRieDc4OTY2OWl5aQ==",
+      },
+      {
+        id : 14,
+        imageSrc: "/medpart/biospin.png",
+        url:"https://www.instagram.com/biospinlab?igsh=MTlud3pndjFmYmJ5dA==",
+      },
+      {
+        id : 15,
+        imageSrc: "/medpart/cci.png",
+        url:"https://www.instagram.com/cciunitel?igsh=cjRjcjVmZHgxdjgw",
+      },
+      {
+        id : 16,
+        imageSrc: "/medpart/csl.png",
+        url:"https://www.instagram.com/esctel_u?igsh=MXN0YnFnNGs1dXFjdQ==",
+      },
+      {
+        id : 17,
+        imageSrc: "/medpart/elitia.png",
+        url:"https://www.instagram.com/elitia_laboratory?igsh=MWR3d3R6NndieDF0Yg==",
+      },
+      {
+        id : 18,
+        imageSrc: "/medpart/erp.png",
+        url:"https://www.instagram.com/erplaboratory?igsh=cHJoNXp3emhjc3M2",
+      },
+      {
+        id : 19,
+        imageSrc: "/medpart/fisdas.png",
+        url:"https://www.instagram.com/labfisdas_telu?igsh=b2p4dWo1ajR0cjVz",
+      },
+      {
+        id : 20,
+        imageSrc: "/medpart/hmtt.png",
+        url:"https://www.instagram.com/hmtt_telco?igsh=aHh0YXViMnZzZTEy",
+      },
+      {
+        id : 21,
+        imageSrc: "/medpart/ieee.png",
+        url:"https://www.instagram.com/ieeetelkomuniv?igsh=MWpkMWMwMjlyYzczbw==",
+      },
+      {
+        id : 22,
+        imageSrc: "/medpart/radio.png",
+        url:"https://www.instagram.com/t_radiotelkom?igsh=MTQ1NXFuOHozZTEycA==",
+      },
+      {
+        id : 23,
+        imageSrc: "/medpart/roboticsas.png",
+        url:"https://www.instagram.com/sasrobotic?igsh=MWNrejF2dnN4cXdjeQ==",
+      },
+      {
+        id : 24,
+        imageSrc: "/medpart/sre.png",
+        url:"https://www.instagram.com/sre.telu?igsh=dDRoOWU5MzVvamFn",
+      },
+      {
+        id : 25,
+        imageSrc: "/medpart/tekdig.png",
+        url:"https://www.instagram.com/tekdig.telu?igsh=MWJpNXJxYnIzam9jag==",
+      },
+      {
+        id : 26,
+        imageSrc: "/medpart/upci.png",
+        url:"https://www.instagram.com/upcilab?igsh=MXZ0dXk2MnRjN3g5cQ==",
+      },
+      {
+        id : 27,
+        imageSrc: "/medpart/inacos.png",
+        url:"https://www.instagram.com/inacos_laboratory?igsh=MWY5ZnVhbmYweWs2cQ==",
+      },
+      {
+        id : 28,
+        imageSrc: "/medpart/kmte.png",
+        url:"https://www.instagram.com/kmte115?igsh=MWt1N3JsdXg1Y3V1ZA==",
+      },
+      {
+        id : 29,
+        imageSrc: "/medpart/eirrg.png",
+        url:"https://www.instagram.com/eirrglaboratory?igsh=MTh0dGZyMDdxemZtYg==",
+      },
+      {
+        id : 30,
+        imageSrc: "/medpart/dsp.png",
+        url:"https://www.instagram.com/dsp.laboratory?igsh=cjY2aHRnOHZoZHh2",
+      },
   ];
 
  export const FlipDataBenefit = [
