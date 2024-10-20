@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { FileUp } from "lucide-react";
 
+
 const RegistrationPage = () => {
   const initialFormData = {
     name: "",
@@ -30,6 +31,7 @@ const RegistrationPage = () => {
   const [showFacultyDropdown, setShowFacultyDropdown] = useState(false);
   const [showYearDropdown, setShowYearDropdown] = useState(false);
   const [showGenderDropdown, setShowGenderDropdown] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const faculties = [
     "Fakultas Teknik Elektro",
@@ -108,6 +110,8 @@ const RegistrationPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    setLoading(true);
+
     try {
       await axios.post(REGISTRATION_API_URL, formData);
       setIsSuccess(true);
@@ -123,6 +127,8 @@ const RegistrationPage = () => {
       } else {
         setAlertMessage("Terjadi kesalahan yang tidak diketahui.");
       }
+    } finally {
+      setLoading(false); // Set loading to false after submission
     }
   };
 
@@ -381,11 +387,37 @@ const RegistrationPage = () => {
         <button
           type="submit"
           className={`w-full bg-[#BA2025] text-white font-bold py-4 px-4 rounded-lg ${
-            isReady ? "hover:bg-red-500" : "opacity-50 cursor-not-allowed"
+            isReady && !loading && isCheckboxChecked ? "hover:bg-red-500" : "opacity-50 cursor-not-allowed"
           }`}
-          disabled={!isReady}
+          disabled={!isReady && !isCheckboxChecked}
         >
-          Daftar
+          {loading ? (
+            <span className="flex items-center justify-center">
+              <svg
+                className="animate-spin h-5 w-5 mr-3 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+              Submitting...
+            </span>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
     </div>
