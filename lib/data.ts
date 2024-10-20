@@ -76,7 +76,7 @@ export const medpartImages = [
       },
       {
         id : 16,
-        imageSrc: "/medpart/csl.png",
+        imageSrc: "/medpart/csl.PNG",
         url:"https://www.instagram.com/esctel_u?igsh=MXN0YnFnNGs1dXFjdQ==",
       },
       {
