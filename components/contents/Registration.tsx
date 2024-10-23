@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { FileUp } from "lucide-react";
 
+
 const RegistrationPage = () => {
   const initialFormData = {
     name: "",
@@ -389,9 +390,7 @@ const RegistrationPage = () => {
         <button
           type="submit"
           className={`w-full bg-[#BA2025] text-white font-bold py-4 px-4 rounded-lg ${
-            isReady && !loading && isCheckboxChecked
-              ? "hover:bg-red-500"
-              : "opacity-50 cursor-not-allowed"
+            isReady ? "hover:bg-red-500" : "opacity-50 cursor-not-allowed"
           }`}
           disabled={!isReady && !isCheckboxChecked}
         >

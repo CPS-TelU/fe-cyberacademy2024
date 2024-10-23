@@ -145,7 +145,7 @@ const Discussion = () => {
           value={newDiscussion}
           onChange={(e) => setNewDiscussion(e.target.value)}
           placeholder="Type New Discussion Here"
-          className="flex-1 outline-none bg-transparent"
+          className="flex-1 outline-none bg-transparent "
         />
         <FontAwesomeIcon
           icon={faPaperPlane}
