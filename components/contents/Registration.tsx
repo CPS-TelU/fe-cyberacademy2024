@@ -109,13 +109,16 @@ const RegistrationPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     setLoading(true);
 
     try {
       await axios.post(REGISTRATION_API_URL, formData);
       setIsSuccess(true);
-      setAlertMessage("Registrasi berhasil! Silakan cek email Anda secara berkala untuk informasi lebih lanjut.");
+      setAlertMessage(
+        "Registrasi berhasil! Silakan cek email Anda secara berkala untuk informasi lebih lanjut."
+      );
       setFormData(initialFormData);
       setIsCheckboxChecked(false);
     } catch (err: unknown) {
@@ -130,6 +133,7 @@ const RegistrationPage = () => {
     } finally {
       setLoading(false); // Set loading to false after submission
     }
+    
   };
 
   const handleCloseAlert = () => {
@@ -320,7 +324,8 @@ const RegistrationPage = () => {
             <FileUp className="h-4 w-4" />
             <AlertTitle>Perhatian !!</AlertTitle>
             <AlertDescription>
-              Pastikan semua dokumen rekrutmen sesuai dengan syarat dan ketentuan, seperti:
+              Pastikan semua dokumen rekrutmen sesuai dengan syarat dan
+              ketentuan, seperti:
               <br />
               a. CV dalam Format ATS-Friendly
               <div className="text-blue-500">
@@ -344,7 +349,8 @@ const RegistrationPage = () => {
                   🔗Link Contoh Motivation Letter
                 </Link>
               </div>
-              Untuk informasi lebih detail, silakan lihat halaman utama situs web ini.
+              Untuk informasi lebih detail, silakan lihat halaman utama situs
+              web ini.
             </AlertDescription>
           </Alert>
         </div>
@@ -383,11 +389,12 @@ const RegistrationPage = () => {
             />
           </div>
         )}
-
         <button
           type="submit"
           className={`w-full bg-[#BA2025] text-white font-bold py-4 px-4 rounded-lg ${
-            isReady && !loading && isCheckboxChecked ? "hover:bg-red-500" : "opacity-50 cursor-not-allowed"
+            isReady && !loading && isCheckboxChecked
+              ? "hover:bg-red-500"
+              : "opacity-50 cursor-not-allowed"
           }`}
           disabled={!isReady && !isCheckboxChecked}
         >
