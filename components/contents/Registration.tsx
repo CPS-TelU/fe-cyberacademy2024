@@ -129,9 +129,7 @@ const RegistrationPage = () => {
         setAlertMessage("Terjadi kesalahan yang tidak diketahui.");
       }
     }
-    finally {
-      setLoading(false); // Set loading to false after submission
-    }
+    
   };
 
   const handleCloseAlert = () => {
