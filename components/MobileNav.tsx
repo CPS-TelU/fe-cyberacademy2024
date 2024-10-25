@@ -78,7 +78,8 @@ const MobileNav = () => {
             className="bg-red-600 text-white text-m px-4 py-2 rounded-full hover:bg-red-700"
             onClick={closeMenu}
           >
-            Register Now
+            {/* Register Now */}
+            Registration Closed
           </a>
           <button
             data-collapse-toggle="navbar-sticky"
