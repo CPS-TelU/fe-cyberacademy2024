@@ -56,7 +56,8 @@ const DiscussionComponent = () => {
   const [answeringTo, setAnsweringTo] = useState<string | null>(null);
 
   const socketRef = useRef<Socket | null>(null);
-  const URL = "http://localhost:3001";
+  const URL = process.env.NEXT_PUBLIC_API_DISCUSSION_URL;
+  // const URL = "http://localhost:3001";
   const token = Cookies.get("token");
 
   useEffect(() => {
