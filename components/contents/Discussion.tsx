@@ -57,7 +57,6 @@ const DiscussionComponent = () => {
 
   const socketRef = useRef<Socket | null>(null);
   const URL = process.env.NEXT_PUBLIC_API_DISCUSSION_URL;
-  // const URL = "http://localhost:3001";
   const token = Cookies.get("token");
 
   useEffect(() => {
@@ -79,7 +78,13 @@ const DiscussionComponent = () => {
   }, []);
 
   useEffect(() => {
-    const socket = io(URL, { withCredentials: true });
+    const socket = io(URL, { 
+      transports: ['pooling'],
+      withCredentials: true });
+
+    socket.on("newQuestion", (newQuestion) => {
+      
+    })
     socketRef.current = socket;
 
     socket.on("connect", () => {
