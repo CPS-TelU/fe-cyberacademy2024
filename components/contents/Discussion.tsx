@@ -6,6 +6,7 @@ import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { io, Socket } from "socket.io-client";
 import Cookies from "js-cookie";
+import { Button } from "../ui/button";
 
 // Type Definitions
 interface Topic {
@@ -45,8 +46,12 @@ const DiscussionComponent = () => {
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [discussions, setDiscussions] = useState<Discussion[]>([]);
   const [newDiscussion, setNewDiscussion] = useState<string>("");
-  const [newDiscussionImage, setNewDiscussionImage] = useState<File | null>(null);
-  const [newDiscussionImageName, setNewDiscussionImageName] = useState<string | null>(null);
+  const [newDiscussionImage, setNewDiscussionImage] = useState<File | null>(
+    null
+  );
+  const [newDiscussionImageName, setNewDiscussionImageName] = useState<
+    string | null
+  >(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -54,6 +59,7 @@ const DiscussionComponent = () => {
   const [answerImage, setAnswerImage] = useState<File | null>(null);
   const [answerImageName, setAnswerImageName] = useState<string | null>(null);
   const [answeringTo, setAnsweringTo] = useState<string | null>(null);
+  const [showReplyInput, setShowReplyInput] = useState<string | null>(null);
 
   const socketRef = useRef<Socket | null>(null);
   const URL = process.env.NEXT_PUBLIC_API_DISCUSSION_URL;
@@ -78,15 +84,11 @@ const DiscussionComponent = () => {
   }, []);
 
   useEffect(() => {
-    const socket = io(URL, { 
-      transports: ['pooling'],
-      withCredentials: true });
-
-    socket.on("newQuestion", (newQuestion) => {
-      
-    })
+    const socket = io(URL, {
+      transports: ["pooling"],
+      withCredentials: true,
+    });
     socketRef.current = socket;
-
     socket.on("connect", () => {
       console.log("Connected to the server");
     });
@@ -99,7 +101,9 @@ const DiscussionComponent = () => {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const response = await axios.get<{ data: Topic[] }>(`${URL}/discussion/topics`);
+        const response = await axios.get<{ data: Topic[] }>(
+          `${URL}/discussion/topics`
+        );
         setTopics(response.data.data);
       } catch (error) {
         console.error("Error fetching topics:", error);
@@ -130,7 +134,9 @@ const DiscussionComponent = () => {
 
   const addNewDiscussion = async () => {
     if (!newDiscussion.trim() || !selectedTopic || !user) {
-      console.log("Cannot send message: Input is empty or no topic/user selected.");
+      console.log(
+        "Cannot send message: Input is empty or no topic/user selected."
+      );
       return;
     }
 
@@ -149,10 +155,14 @@ const DiscussionComponent = () => {
       });
 
       const newQuestion = response.data.data;
-      newQuestion.User = user;
       newQuestion.Topic = selectedTopic;
 
+      // Emit to other clients
       socketRef.current?.emit("newQuestion", newQuestion);
+
+      // Add the new question at the top of the discussions
+      setDiscussions((prevDiscussions) => [newQuestion, ...prevDiscussions]);
+
       setNewDiscussion("");
       setNewDiscussionImage(null);
       setNewDiscussionImageName(null);
@@ -171,18 +181,24 @@ const DiscussionComponent = () => {
     if (answerImage) formData.append("image", answerImage);
 
     try {
-      const response = await axios.post(`${URL}/api/discussion/answers`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        `${URL}/api/discussion/answers`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       const newAnswer = response.data.data;
       newAnswer.user = user.name;
 
-      socketRef.current?.emit("newAnswer", { ...newAnswer, question_id: discussionId });
-
+      socketRef.current?.emit("newAnswer", {
+        ...newAnswer,
+        question_id: discussionId,
+      });
       setDiscussions((prevDiscussions) =>
         prevDiscussions.map((discussion) =>
           discussion.id === discussionId
@@ -200,7 +216,9 @@ const DiscussionComponent = () => {
     }
   };
 
-  const handleNewDiscussionImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNewDiscussionImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = e.target.files ? e.target.files[0] : null;
     setNewDiscussionImage(file);
     setNewDiscussionImageName(file ? file.name : null);
@@ -211,9 +229,15 @@ const DiscussionComponent = () => {
     setAnswerImage(file);
     setAnswerImageName(file ? file.name : null);
   };
-
+  const toggleReplyInput = (discussionId: string) => {
+    setShowReplyInput((prevId) =>
+      prevId === discussionId ? null : discussionId
+    );
+  };
   return (
-    <section className={`p-4 md:p-10 lg:p-12 ml-0 md:ml-10 ${poppins.className}`}>
+    <section
+      className={`p-4 md:p-10 lg:p-12 ml-0 md:ml-10 ${poppins.className}`}
+    >
       <h1 className="flex text-red-600 text-2xl md:text-4xl lg:text-5xl font-bold mt-10 ">
         Forum Discussion
       </h1>
@@ -246,7 +270,9 @@ const DiscussionComponent = () => {
           <FontAwesomeIcon
             icon={faPaperclip}
             className="w-6 h-6 text-gray-400 mr-3 cursor-pointer hover:text-red-600 hover:scale-110 transition-all duration-300"
-            onClick={() => document.getElementById("discussionImageInput")?.click()}
+            onClick={() =>
+              document.getElementById("discussionImageInput")?.click()
+            }
           />
           <input
             type="file"
@@ -265,7 +291,9 @@ const DiscussionComponent = () => {
             disabled={!selectedTopic}
           />
           {newDiscussionImageName && (
-            <span className="text-sm text-gray-500 ml-2">{newDiscussionImageName}</span>
+            <span className="text-sm text-gray-500 ml-2">
+              {newDiscussionImageName}
+            </span>
           )}
           <FontAwesomeIcon
             icon={faPaperPlane}
@@ -301,17 +329,20 @@ const DiscussionComponent = () => {
               </div>
               <p className="mb-4">{discussion.messages}</p>
               {discussion.image && (
-                 <img
-                 src={discussion.image}
-                 alt="discussion image"
-                 className="w-full max-w-xs md:max-w-sm lg:max-w-md rounded-lg mb-4"
-               />
+                <img
+                  src={discussion.image}
+                  alt="discussion image"
+                  className="w-full max-w-xs md:max-w-sm lg:max-w-md rounded-lg mb-4"
+                />
               )}
 
               {discussion.answers?.length > 0 && (
                 <div className="ml-10 mt-4">
                   {discussion.answers.map((answer) => (
-                    <div key={answer.id} className="border-t border-gray-300 pt-4">
+                    <div
+                      key={answer.id}
+                      className="border-t border-gray-300 pt-4"
+                    >
                       <div className="flex items-center mb-4">
                         <div className="w-12 h-12 bg-red-600 rounded-full flex justify-center items-center text-white font-bold mr-3">
                           {answer.User.name?.charAt(0).toUpperCase()}
@@ -326,47 +357,65 @@ const DiscussionComponent = () => {
                       <p>{answer.messages}</p>
                       {answer.image && (
                         <img
-                        src={answer.image}
-                        alt="answer image"
-                        className="w-full max-w-xs md:max-w-sm lg:max-w-md rounded-lg mb-4"
-                      />
+                          src={answer.image}
+                          alt="answer image"
+                          className="w-full max-w-xs md:max-w-sm lg:max-w-md rounded-lg mb-4"
+                        />
                       )}
                     </div>
                   ))}
                 </div>
               )}
 
-              <div className="flex items-center border border-gray-100 p-4 rounded-2xl bg-gray-50 shadow-lg w-full mt-4">
-                <FontAwesomeIcon
-                  icon={faPaperclip}
-                  className="w-6 h-6 text-gray-400 mr-3 cursor-pointer hover:text-red-600 hover:scale-110 transition-all duration-300"
-                  onClick={() => document.getElementById(`answerImageInput-${discussion.id}`)?.click()}
-                />
-                <input
-                  type="file"
-                  id={`answerImageInput-${discussion.id}`}
-                  style={{ display: "none" }}
-                  onChange={handleAnswerImageChange}
-                />
-                <input
-                  type="text"
-                  value={answeringTo === discussion.id ? answerContent : ""}
-                  onFocus={() => setAnsweringTo(discussion.id)}
-                  onChange={(e) => setAnswerContent(e.target.value)}
-                  placeholder="Answer this discussion"
-                  className="flex-1 outline-none bg-transparent"
-                />
-                {answerImageName && (
-                  <span className="text-sm text-gray-500 ml-2">{answerImageName}</span>
-                )}
-                <FontAwesomeIcon
-                  icon={faPaperPlane}
-                  className="w-6 h-6 text-gray-400 cursor-pointer mr-3 hover:text-red-600 hover:scale-110 transition-all duration-300"
-                  onClick={() => {
-                    if (answeringTo === discussion.id) handleAnswer(discussion.id);
-                  }}
-                />
-              </div>
+              {/* Reply Button */}
+              <button
+                className="text-[#BA2025] hover:underline mt-4"
+                onClick={() => toggleReplyInput(discussion.id)}
+              >
+                Reply
+              </button>
+
+              {/* Conditional Answer Input */}
+              {showReplyInput === discussion.id && (
+                <div className="flex items-center border border-gray-100 p-4 rounded-2xl bg-gray-50 shadow-lg w-full mt-4">
+                  <FontAwesomeIcon
+                    icon={faPaperclip}
+                    className="w-6 h-6 text-gray-400 mr-3 cursor-pointer hover:text-red-600 hover:scale-110 transition-all duration-300"
+                    onClick={() =>
+                      document
+                        .getElementById(`answerImageInput-${discussion.id}`)
+                        ?.click()
+                    }
+                  />
+                  <input
+                    type="file"
+                    id={`answerImageInput-${discussion.id}`}
+                    style={{ display: "none" }}
+                    onChange={handleAnswerImageChange}
+                  />
+                  <input
+                    type="text"
+                    value={answeringTo === discussion.id ? answerContent : ""}
+                    onFocus={() => setAnsweringTo(discussion.id)}
+                    onChange={(e) => setAnswerContent(e.target.value)}
+                    placeholder="Answer this discussion"
+                    className="flex-1 outline-none bg-transparent"
+                  />
+                  {answerImageName && (
+                    <span className="text-sm text-gray-500 ml-2">
+                      {answerImageName}
+                    </span>
+                  )}
+                  <FontAwesomeIcon
+                    icon={faPaperPlane}
+                    className="w-6 h-6 text-gray-400 cursor-pointer mr-3 hover:text-red-600 hover:scale-110 transition-all duration-300"
+                    onClick={() => {
+                      if (answeringTo === discussion.id)
+                        handleAnswer(discussion.id);
+                    }}
+                  />
+                </div>
+              )}
             </div>
           ))}
         </div>
