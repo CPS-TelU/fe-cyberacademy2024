@@ -289,6 +289,15 @@ const DiscussionComponent = () => {
               !selectedTopic ? "opacity-50 cursor-not-allowed" : "opacity-100"
             }`}
             disabled={!selectedTopic}
+            onKeyDown={(e) => {
+              if (
+                e.key === "Enter" &&
+                newDiscussion.trim() !== "" &&
+                selectedTopic
+              ) {
+                addNewDiscussion();
+              }
+            }}
           />
           {newDiscussionImageName && (
             <span className="text-sm text-gray-500 ml-2">
@@ -398,6 +407,15 @@ const DiscussionComponent = () => {
                     value={answeringTo === discussion.id ? answerContent : ""}
                     onFocus={() => setAnsweringTo(discussion.id)}
                     onChange={(e) => setAnswerContent(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (
+                        e.key === "Enter" &&
+                        answeringTo === discussion.id &&
+                        answerContent.trim() !== ""
+                      ) {
+                        handleAnswer(discussion.id);
+                      }
+                    }}
                     placeholder="Answer this discussion"
                     className="flex-1 outline-none bg-transparent"
                   />
