@@ -111,8 +111,6 @@ const RegistrationPage = () => {
     e.preventDefault();
     setLoading(true);
 
-    setLoading(true);
-
     try {
       await axios.post(REGISTRATION_API_URL, formData);
       setIsSuccess(true);
@@ -130,8 +128,6 @@ const RegistrationPage = () => {
       } else {
         setAlertMessage("Terjadi kesalahan yang tidak diketahui.");
       }
-    } finally {
-      setLoading(false); // Set loading to false after submission
     }
     
   };
@@ -392,9 +388,7 @@ const RegistrationPage = () => {
         <button
           type="submit"
           className={`w-full bg-[#BA2025] text-white font-bold py-4 px-4 rounded-lg ${
-            isReady && !loading && isCheckboxChecked
-              ? "hover:bg-red-500"
-              : "opacity-50 cursor-not-allowed"
+            isReady ? "hover:bg-red-500" : "opacity-50 cursor-not-allowed"
           }`}
           disabled={!isReady && !isCheckboxChecked}
         >
