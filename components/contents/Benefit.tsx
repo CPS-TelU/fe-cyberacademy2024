@@ -11,7 +11,7 @@ const Benefit = () => {
     useEffect(() => {
       const timer = setTimeout(() => {
         setIsLoading(false);
-      }, 700); // Simulate loading delay
+      }, 200); // Simulate loading delay
   
       return () => clearTimeout(timer); // Cleanup timer on component unmount
     }, []);
