@@ -146,3 +146,32 @@ export function SkeletonMedPart() {
     </div>
   )
 }
+
+
+const SkeletonAssignmentSection = () => {
+  return (
+    <div className="p-4 mt-8 mx-auto sm:w-[500px] md:w-[700px] lg:w-[1000px] xl:w-[1155px] 2xl:w-[1190px]">
+      {/* Title Skeleton */}
+      <div className="flex items-center space-x-2">
+        <div className="w-10 h-10 bg-gray-300 rounded-xl"></div>
+        <div className="w-[250px] h-8 bg-gray-300 rounded"></div>
+      </div>
+
+      <div className="mt-4 p-4 bg-white rounded-md shadow-md">
+        {/* File name skeleton */}
+        <div className="h-4 bg-gray-300 rounded w-[400px]"></div>
+
+        {/* Divider */}
+        <div className="mt-2 w-full h-1 bg-gray-300"></div>
+
+        {/* Opened/Closed time skeleton */}
+        <div className="mt-4 space-y-2">
+          <div className="w-[300px] h-4 bg-gray-300 rounded"></div>
+          <div className="w-[300px] h-4 bg-gray-300 rounded"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SkeletonAssignmentSection;
