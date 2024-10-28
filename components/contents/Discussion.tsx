@@ -242,7 +242,7 @@ const DiscussionComponent = () => {
         Forum Discussion
       </h1>
 
-      <div className="flex flex-col items-center justify-center mt-6 w-full max-w-7xl mx-auto min-w-[1000px]">
+      <div className="flex flex-col items-center justify-center mt-6 w-full max-w-7xl mx-auto min-w-[300px] sm:min-w-[580px] md:min-w-[700px] lg:min-w-[930px] xl:min-w-[1000px] 2xl:min-w-[1000px]">
         <div className="relative w-full mb-6" ref={selectRef}>
           <button
             onClick={handleDropdown}
