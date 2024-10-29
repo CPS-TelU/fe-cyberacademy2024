@@ -1,26 +1,31 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { FaFileAlt, FaClipboardList, FaComments } from "react-icons/fa"; 
 
 const MyCourseDetail = () => {
+    const { slug } = useParams(); 
+
     const elements = [
         { 
             title: "Module 1", 
             description: "Basic Linux", 
             icon: FaFileAlt, 
-            url: "/module-1"  // Replace with the actual path
-        },
+            url: `/module-1`  // Sesuaikan path dengan slug
+        },  
         { 
             title: "Assignment 1", 
             description: "Basic Linux & GitHub", 
             icon: FaClipboardList, 
-            url: "/lms/mycourses/coursedetail/assignment"  
+            url: `/lms/mycourses/${slug}/assignment`  // Sesuaikan path dengan slug
         },
         { 
             title: "Forum Discussion", 
             description: "Basic Linux & GitHub", 
             icon: FaComments, 
-            url: "/lms/mycourses/coursedetail/moduldiscussion"  
+            url: `/lms/mycourses/${slug}/moduldiscussion`  // Sesuaikan path dengan slug
         },
     ];
 

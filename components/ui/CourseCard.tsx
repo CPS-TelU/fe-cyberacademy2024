@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import { CustomButton  } from "./AniButton";
+import { CustomButton } from "./AniButton";
+import Link from "next/link";
 
 interface CourseCardProps {
   image: string;
@@ -15,6 +18,9 @@ const CourseCard: React.FC<CourseCardProps> = ({
   title,
   status,
 }) => {
+  // Generate slug dynamically based on title or any unique identifier
+  const slug = title.replace(/\s+/g, "-").toLowerCase();
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="relative w-full h-[200px]">
@@ -36,7 +42,11 @@ const CourseCard: React.FC<CourseCardProps> = ({
           <p className="text-[#454545] text-xs sm:text-xs md:text-xs lg:text-sm xl:text-md 2xl:text-lg">
             {status}
           </p>
-          <CustomButton text="View Course" href="/lms/mycourses/coursedetail" className="mt-8" />
+          <CustomButton 
+            text="View Course" 
+            href={`/lms/mycourses/${slug}`}  // Tambahkan href disini
+            className="mt-8" 
+            />
         </div>
       </div>
     </div>

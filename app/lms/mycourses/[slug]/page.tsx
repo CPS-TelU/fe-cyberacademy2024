@@ -1,6 +1,7 @@
+"use client";
 
 import MyCoursesDetail from "@/components/contents/MyCourseDetail";
-
+import { useParams } from "next/navigation";
 
 export default function course() {
     return (

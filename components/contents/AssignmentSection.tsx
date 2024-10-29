@@ -5,7 +5,7 @@ import AssignmentCard from '../ui/AssignmentCard2';
 import Image from 'next/image';
 import { poppins } from '@/styles/font';
 import SkeletonAssignmentSection from '../ui/SkeletonCard';
-
+import { useParams } from 'next/navigation'; // Import useParams
 
 interface Task {
     id: string;
@@ -19,14 +19,15 @@ interface Task {
 }
 
 const AssignmentSection: React.FC = () => {
+    const { slug } = useParams(); // Get slug from URL
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        // Fetch tasks data from the API
         const fetchTasks = async () => {
             try {
-                const response = await fetch('https://be-cyber-academy.vercel.app/api/tasks');
+                // Include slug in the API URL
+                const response = await fetch(`https://be-cyber-academy.vercel.app/api/tasks/${slug}`);
                 const data = await response.json();
                 setTasks(data.tasks);
                 console.log(data.tasks);
@@ -38,12 +39,10 @@ const AssignmentSection: React.FC = () => {
         };
 
         fetchTasks();
-    }, []);
-    
+    }, [slug]); // Depend on slug to refetch when slug changes
+
     if (loading) {
-      return (
-          <SkeletonAssignmentSection /> 
-      );
+        return <SkeletonAssignmentSection />;
     }
 
     return (
@@ -55,7 +54,7 @@ const AssignmentSection: React.FC = () => {
                         <span className="mr-4 sm:mr-0 ml-4 sm:ml-0">
                             {/* PNG Icon for Assignment */}
                             <Image
-                                src="/Assignment1.png" // Update this path to your PNG file
+                                src="/Assignment1.png"
                                 alt="Assignment Icon"
                                 width={32}
                                 height={32}
@@ -72,7 +71,7 @@ const AssignmentSection: React.FC = () => {
                             <div>
                                 <div className="flex items-center mb-1">
                                     <Image
-                                        src="/Assignment1pdf.png" // Update this path to your PNG file
+                                        src="/Assignment1pdf.png"
                                         alt="File Icon"
                                         width={24}
                                         height={24}
