@@ -21,12 +21,12 @@ const MyCourseDetail = () => {
             icon: FaClipboardList, 
             url: `/lms/mycourses/${slug}/assignment`  // Sesuaikan path dengan slug
         },
-        { 
-            title: "Forum Discussion", 
-            description: "Basic Linux & GitHub", 
-            icon: FaComments, 
-            url: `/lms/mycourses/${slug}/moduldiscussion`  // Sesuaikan path dengan slug
-        },
+        // { 
+        //     title: "Forum Discussion", 
+        //     description: "Basic Linux & GitHub", 
+        //     icon: FaComments, 
+        //     url: `/lms/mycourses/${slug}/moduldiscussion`  // Sesuaikan path dengan slug
+        // },
     ];
 
     return (
