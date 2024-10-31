@@ -31,7 +31,7 @@ const MyCourseCard: React.FC = () => {
           description: mod.description,
           status: mod.status,
           image: mod.image || '/default-image.png' ,// Set default image if API image is not available
-          href: `https://be-cyber-academy.vercel.app/api/moduls/get/${mod.id}`
+          href: `/lms/mycourses/${mod.id}`
         }));
         setCourses(modules);
         setLoading(false);
@@ -64,10 +64,8 @@ const MyCourseCard: React.FC = () => {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-[#BA2025] mb-8">My Courses</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {courses.map((course, index) => (
-          <Link href={course.href} key={index}>
-              <CourseCard {...course} />
-          </Link>
+      {courses.map((course) => (
+          <CourseCard key={course.id} {...course} />
         ))}
       </div>
     </div>
