@@ -90,7 +90,7 @@ const LoginPage: React.FC = () => {
                 placeholder="Enter your NIM here"
                 value={nim}
                 onChange={(e) => setNim(e.target.value)}
-                className="w-full px-4 py-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-red-300"
+                className="w-full px-4 py-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-red-300 bg-white"
                 required
               />
             </div>
@@ -104,7 +104,7 @@ const LoginPage: React.FC = () => {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-red-300"
+                className="w-full px-4 py-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-red-300 bg-white"
                 required
               />
               <button
