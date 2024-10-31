@@ -161,9 +161,9 @@ const Biodata: React.FC = () => {
             <span className="font-semibold">Class:</span>{" "}
             {profileData.className}
           </p>
-          <p>
+          {/* <p>
             <span className="font-semibold">Group:</span> {profileData.Group}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
