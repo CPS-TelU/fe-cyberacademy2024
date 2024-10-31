@@ -1,6 +1,10 @@
 import AnnouncementCard from "../ui/AnnounceCard";
 import StatusCard from "../ui/StatusCard";
 
+
+
+
+
 export default function AnnouncementContent() {
   const announcements = [
     {
