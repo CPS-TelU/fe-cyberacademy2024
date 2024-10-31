@@ -1,24 +1,46 @@
+"use client";
+
 import AnnouncementCard from "../ui/AnnounceCard";
 import StatusCard from "../ui/StatusCard";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 
-
+interface Status {
+  status: string;
+  name: string;
+}
 
 
 export default function AnnouncementContent() {
+  const [statuses, setStatuses] = useState<Status[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchStatuses = async () => {
+    try {
+      const response = await axios.get('https://be-cyber-academy.vercel.app/api/moduls/get');
+      const modules = response.data.map((mod : any) => ({
+        status: mod.status,
+        name: mod.name,
+      }));
+      setStatuses(modules);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching statuses:", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStatuses();
+  }, []);
+
   const announcements = [
     {
       title: "New Module Addition",
       date: "Monday, 1 November 2024",
       description: "New modules have been added for the material being worked on",
     },
-  ];
-
-  const statuses = [
-    { status: "Completed", label: "BASIC LINUX & GITHUB" },
-    { status: "On Progress", label: "WEB DEVELOPMENT" },
-    { status: "Oncoming", label: "INTERNET OF THINGS" },
-    { status: "Oncoming", label: "MACHINE LEARNING" },
   ];
 
   return (
@@ -29,7 +51,7 @@ export default function AnnouncementContent() {
       <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-black mb-3">
         Keep an eye on the announcements for the latest updates and information about Cyber Academy.
       </p>
-      
+
       {announcements.map((announcement, index) => (
         <AnnouncementCard
           key={index}
@@ -38,10 +60,15 @@ export default function AnnouncementContent() {
           description={announcement.description}
         />
       ))}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {statuses.map((status, index) => (
-          <StatusCard key={index} status={status.status} label={status.label} />
-        ))}
+        {loading ? (
+          <p>Loading statuses...</p>
+        ) : (
+          statuses.map((status, index) => (
+            <StatusCard key={index} status={status.status} label={status.name} />
+          ))
+        )}
       </div>
     </div>
   );

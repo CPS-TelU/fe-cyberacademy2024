@@ -87,7 +87,7 @@ const Header = () => {
 
         <div className="flex items-center">
           <Button className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700">
-            <Link href="/registration">Registration Closed</Link>
+            <Link href="/login">Login</Link>
           </Button>
         </div>
       </nav>
