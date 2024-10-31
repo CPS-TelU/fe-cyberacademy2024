@@ -6,21 +6,20 @@ import { CustomButton } from "./AniButton";
 import Link from "next/link";
 
 interface CourseCardProps {
+  id: number;
   image: string;
   module: string;
   title: string;
   status: string;
 }
 
-const  CourseCard: React.FC<CourseCardProps> = ({
+const CourseCard: React.FC<CourseCardProps> = ({
+  id,
   image,
   module,
   title,
   status,
 }) => {
-  // Generate slug dynamically based on title or any unique identifier
-  const slug = title.replace(/\s+/g, "-").toLowerCase();
-
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="relative w-full h-[200px]">
@@ -44,9 +43,9 @@ const  CourseCard: React.FC<CourseCardProps> = ({
           </p>
           <CustomButton 
             text="View Course" 
-            href={`/lms/mycourses/${slug}`}  // Tambahkan href disini
+            href={`/lms/mycourses/${id}`}  // Langsung menggunakan module sebagai id
             className="mt-8" 
-            />
+          />
         </div>
       </div>
     </div>
