@@ -5,7 +5,7 @@ export default function DashboardHero() {
   return (
     <div className="flex items-center justify-center w-full h-[100px] sm:h-[150px] md:h-[200px] lg:h-[250px] xl:h-[300px] mt-8">
       <Image
-        src="/bg-dashboard.jpg"
+        src="/bg.png"
         alt="Dashboard Banner"
         width={1100}
         height={800}

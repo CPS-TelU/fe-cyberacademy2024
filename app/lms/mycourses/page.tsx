@@ -1,5 +1,4 @@
 import MyCoursesPage from "@/components/Layouts/MyCourse";
-import { poppins } from "@/styles/font";
 
 
 export default function course() {

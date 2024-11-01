@@ -146,3 +146,85 @@ export function SkeletonMedPart() {
     </div>
   )
 }
+
+
+const SkeletonAssignmentSection = () => {
+  return (
+    <div className="p-4 mt-8 mx-auto sm:w-[500px] md:w-[700px] lg:w-[1000px] xl:w-[1155px] 2xl:w-[1190px]">
+      {/* Title Skeleton */}
+      <div className="flex items-center space-x-2">
+        <div className="w-10 h-10 bg-gray-300 rounded-xl"></div>
+        <div className="w-[250px] h-8 bg-gray-300 rounded"></div>
+      </div>
+
+      <div className="mt-4 p-4 bg-white rounded-md shadow-md">
+        {/* File name skeleton */}
+        <div className="h-4 bg-gray-300 rounded w-[400px]"></div>
+
+        {/* Divider */}
+        <div className="mt-2 w-full h-1 bg-gray-300"></div>
+
+        {/* Opened/Closed time skeleton */}
+        <div className="mt-4 space-y-2">
+          <div className="w-[300px] h-4 bg-gray-300 rounded"></div>
+          <div className="w-[300px] h-4 bg-gray-300 rounded"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SkeletonAssignmentSection;
+
+export const SkeletonCourseCard = () => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[...Array(5)].map((_, index) => (
+      <div key={index} className="mt-8" >
+        <Skeleton className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
+        <div className="relative w-full h-[200px]">
+          <Skeleton
+            style={{ objectFit: "cover" }}
+            className="w-full h-full object-cover bg-gray-300"
+          />
+        </div>
+        <div className="p-4 sm:p-3 md:p-4 lg:p-5 xl:p-6 2xl:p-7">
+          <Skeleton className="h-4 w-[100px] bg-gray-300"/>
+          <Skeleton className="h-6 w-[200px] bg-gray-300"/>
+          <div className="flex justify-between items-center mt-2">
+            <Skeleton className="h-4 w-[200px] bg-gray-300"/>
+
+            <Skeleton
+              className="mt-8 bg-gray-300 px-4 py-2 rounded rounded-xl h-8 w-20"
+            />   
+          </div>
+        </div>
+      </Skeleton>
+      </div>
+      ))}
+    </div>
+  );
+}
+
+export const SkeletonAnnouncement = () => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+    {[...Array(5)].map((_, index) => (
+      <div key={index} className="mt-8 gap-4" >
+    <div className="w-40 h-24 bg-gray-100 p-4 rounded-lg shadow-md flex flex-col justify-center space-y-2 gap-4">
+      {/* Icon skeleton */}
+      <div className="flex items-center space-x-3">
+        <div className="bg-gray-300 w-8 h-8 rounded-full" />
+        
+        {/* Text skeleton */}
+        <div className="flex flex-col space-y-1">
+          <div className="bg-gray-300 w-16 h-4 rounded" />
+          <div className="bg-gray-400 w-24 h-5 rounded" />
+        </div>
+      </div>
+    </div>
+    </div>
+    ))} 
+  </div>
+  );
+}

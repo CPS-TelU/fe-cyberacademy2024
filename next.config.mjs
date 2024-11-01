@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-    domains: ['assets.aceternity.com', 'images.unsplash.com'], // Tambahkan domain eksternal di sini
+    domains: ['assets.aceternity.com', 'images.unsplash.com','ik.imagekit.io'], // Tambahkan domain eksternal di sini
   },
 };
 

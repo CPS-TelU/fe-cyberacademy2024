@@ -1,4 +1,3 @@
-// ui/AssignmentCard.tsx
 import React from 'react';
 interface AddAssignmentCardProps {
   title: string;

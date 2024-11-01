@@ -2,11 +2,10 @@
 import { useState, useEffect, useRef } from "react";
 import { poppins } from "@/styles/font";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faPaperclip, faPaperPlane, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { io, Socket } from "socket.io-client";
 import Cookies from "js-cookie";
-import { Button } from "../ui/button";
 
 // Type Definitions
 interface Topic {
@@ -49,7 +48,7 @@ const DiscussionComponent = () => {
   const [newDiscussionImage, setNewDiscussionImage] = useState<File | null>(
     null
   );
-  const [newDiscussionImageName, setNewDiscussionImageName] = useState<
+  const [, setNewDiscussionImageName] = useState<
     string | null
   >(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -60,6 +59,7 @@ const DiscussionComponent = () => {
   const [answerImageName, setAnswerImageName] = useState<string | null>(null);
   const [answeringTo, setAnsweringTo] = useState<string | null>(null);
   const [showReplyInput, setShowReplyInput] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const socketRef = useRef<Socket | null>(null);
   const URL = process.env.NEXT_PUBLIC_API_DISCUSSION_URL;
@@ -134,9 +134,7 @@ const DiscussionComponent = () => {
 
   const addNewDiscussion = async () => {
     if (!newDiscussion.trim() || !selectedTopic || !user) {
-      console.log(
-        "Cannot send message: Input is empty or no topic/user selected."
-      );
+      console.log("Input tidak boleh kosong atau belum memilih topik/pengguna.");
       return;
     }
 
@@ -145,6 +143,8 @@ const DiscussionComponent = () => {
     formData.append("user_id", String(user.id));
     formData.append("topic_id", selectedTopic.id);
     if (newDiscussionImage) formData.append("image", newDiscussionImage);
+
+    setLoading(true); // Mulai loading
 
     try {
       const response = await axios.post(`${URL}/api/discussion`, formData, {
@@ -156,18 +156,16 @@ const DiscussionComponent = () => {
 
       const newQuestion = response.data.data;
       newQuestion.Topic = selectedTopic;
-
-      // Emit to other clients
       socketRef.current?.emit("newQuestion", newQuestion);
 
-      // Add the new question at the top of the discussions
       setDiscussions((prevDiscussions) => [newQuestion, ...prevDiscussions]);
-
       setNewDiscussion("");
       setNewDiscussionImage(null);
       setNewDiscussionImageName(null);
     } catch (error) {
       console.error("Error adding new discussion:", error);
+    } finally {
+      setLoading(false); // Selesai loading
     }
   };
 
@@ -234,6 +232,7 @@ const DiscussionComponent = () => {
       prevId === discussionId ? null : discussionId
     );
   };
+ 
   return (
     <section
       className={`p-4 md:p-10 lg:p-12 ml-0 md:ml-10 ${poppins.className}`}
@@ -242,7 +241,7 @@ const DiscussionComponent = () => {
         Forum Discussion
       </h1>
 
-      <div className="flex flex-col items-center justify-center mt-6 w-full max-w-7xl mx-auto min-w-[1000px]">
+      <div className="flex flex-col items-center justify-center mt-6 w-full max-w-7xl mx-auto min-w-[300px] sm:min-w-[580px] md:min-w-[700px] lg:min-w-[930px] xl:min-w-[1000px] 2xl:min-w-[1000px]">
         <div className="relative w-full mb-6" ref={selectRef}>
           <button
             onClick={handleDropdown}
@@ -270,55 +269,47 @@ const DiscussionComponent = () => {
           <FontAwesomeIcon
             icon={faPaperclip}
             className="w-6 h-6 text-gray-400 mr-3 cursor-pointer hover:text-red-600 hover:scale-110 transition-all duration-300"
-            onClick={() =>
-              document.getElementById("discussionImageInput")?.click()
-            }
+            onClick={() => document.getElementById("discussionImageInput")?.click()}
           />
           <input
             type="file"
             id="discussionImageInput"
             style={{ display: "none" }}
-            onChange={handleNewDiscussionImageChange}
+            onChange={(e) => {
+              const file = e.target.files ? e.target.files[0] : null;
+              setNewDiscussionImage(file);
+              setNewDiscussionImageName(file ? file.name : null);
+            }}
           />
           <input
             type="text"
             value={newDiscussion}
             onChange={(e) => setNewDiscussion(e.target.value)}
             placeholder="Type New Discussion Here"
-            className={`flex-1 outline-none bg-transparent transition-opacity duration-300 ${
-              !selectedTopic ? "opacity-50 cursor-not-allowed" : "opacity-100"
+            className={`flex-1 outline-none bg-transparent ${
+              loading ? "opacity-50 cursor-wait" : ""
             }`}
-            disabled={!selectedTopic}
+            disabled={loading || !selectedTopic}
             onKeyDown={(e) => {
-              if (
-                e.key === "Enter" &&
-                newDiscussion.trim() !== "" &&
-                selectedTopic
-              ) {
+              if (e.key === "Enter" && !loading && newDiscussion.trim() && selectedTopic) {
                 addNewDiscussion();
               }
             }}
           />
-          {newDiscussionImageName && (
-            <span className="text-sm text-gray-500 ml-2">
-              {newDiscussionImageName}
-            </span>
+          {loading ? (
+            <FontAwesomeIcon icon={faSpinner} className="w-6 h-6 text-red-600 animate-spin" />
+          ) : (
+            <FontAwesomeIcon
+              icon={faPaperPlane}
+              className={`w-6 h-6 text-gray-400 ${
+                !newDiscussion.trim() || !selectedTopic ? "opacity-50" : "hover:text-red-600"
+              }`}
+              onClick={() => {
+                if (!loading && newDiscussion.trim() && selectedTopic) addNewDiscussion();
+              }}
+            />
           )}
-          <FontAwesomeIcon
-            icon={faPaperPlane}
-            className={`w-6 h-6 text-gray-400 mr-3 ${
-              newDiscussion.trim() === "" || !selectedTopic
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:text-red-600 hover:scale-110 cursor-pointer transition-all duration-300"
-            }`}
-            onClick={() => {
-              if (newDiscussion.trim() !== "" && selectedTopic) {
-                addNewDiscussion();
-              }
-            }}
-          />
         </div>
-
         <div className="flex flex-col gap-6 justify-start items-center w-full mt-6">
           {discussions.map((discussion) => (
             <div
