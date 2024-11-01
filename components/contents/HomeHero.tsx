@@ -30,7 +30,7 @@ const HomeHero = () => {
         <p className="mt-4 text-base sm:text-lg md:text-xl lg:text-2xl text-center">
           Brace Yourself For A Whole New Adventure
         </p>
-        <ArrowButton text="Let's Get Started" href="/fullform" className="mt-8" />
+        <ArrowButton text="Let's Get Started" href="/login" className="mt-8" />
       </div>
       <div className="mt-12 w-full flex justify-center px-4 md:px-0">
         <Image

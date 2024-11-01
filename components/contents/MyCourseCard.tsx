@@ -20,10 +20,12 @@ const MyCourseCard: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const COURSE_API_URL = `${API_BASE_URL}/moduls/get`;
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('https://be-cyber-academy.vercel.app/api/moduls/get');
+        const response = await axios.get(COURSE_API_URL);
         const modules = response.data.map((mod: any) => ({
           id: mod.id,
           module: mod.id,

@@ -6,7 +6,6 @@ import { faPaperclip, faPaperPlane, faSpinner } from "@fortawesome/free-solid-sv
 import axios from "axios";
 import { io, Socket } from "socket.io-client";
 import Cookies from "js-cookie";
-import { Button } from "../ui/button";
 
 // Type Definitions
 interface Topic {
@@ -49,7 +48,7 @@ const DiscussionComponent = () => {
   const [newDiscussionImage, setNewDiscussionImage] = useState<File | null>(
     null
   );
-  const [newDiscussionImageName, setNewDiscussionImageName] = useState<
+  const [, setNewDiscussionImageName] = useState<
     string | null
   >(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
