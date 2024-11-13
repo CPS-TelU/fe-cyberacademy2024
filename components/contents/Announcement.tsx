@@ -37,9 +37,9 @@ export default function AnnouncementContent() {
 
   const announcements = [
     {
-      title: "New Module Addition",
-      date: "Monday, 1 November 2024",
-      description: "New modules have been added for the material being worked on",
+      title: "New Module Unlocked",
+      date: "Wednesday, 13 November 2024",
+      description: "The Internet of Things modules have been unlocked stay tune for futher updates",
     },
   ];
 
