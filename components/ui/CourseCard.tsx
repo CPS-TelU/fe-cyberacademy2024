@@ -37,15 +37,15 @@ const CourseCard: React.FC<CourseCardProps> = ({
         />
       </div>
       <div className="p-4 sm:p-3 md:p-4 lg:p-5 xl:p-6 2xl:p-7">
-        <p className="text-[#454545] text-xs sm:text-xs md:text-xs lg:text-sm xl:text-md 2xl:text-lg lowercase">
+        <p className="text-[#454545] text-xs sm:text-xs md:text-xs lg:text-sm xl:text-md 2xl:text-lg">
           Module {module}
         </p>
-        <h2 className="text-sm sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl font-semibold text-[#000000] lowercase">
-          {title}
+        <h2 className="text-sm sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl font-semibold text-[#000000] uppercase">
+          {title.toUpperCase()}
         </h2>
         <div className="flex justify-between items-center mt-2">
-          <p className="text-[#454545] text-xs sm:text-xs md:text-xs lg:text-sm xl:text-md 2xl:text-lg lowercase">
-            {status}
+          <p className="text-[#454545] text-xs sm:text-xs md:text-xs lg:text-sm xl:text-md 2xl:text-lg uppercase">
+            {status.toUpperCase()}
           </p>
           {isComingSoon ? (
             <button
