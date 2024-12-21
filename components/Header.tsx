@@ -58,7 +58,7 @@ const Header = () => {
   return (
     <header
       className={`${dmSans.className} fixed top-0 w-full transition-transform duration-300 z-[9999] 
-      }`}
+      `}
     >
       <nav
         className="mx-auto hidden lg:flex max-w-[1200px] items-center justify-between p-4 rounded-full bg-white shadow-lg"
